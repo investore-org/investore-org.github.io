@@ -1,0 +1,20 @@
+@import "Home.css";
+
+.container-invest {
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    padding: 0 40% 0 40%;
+}
+
+.button-invest {
+    height: 150px;
+    padding: 25% 0;
+    border: solid gray 2px;
+    color: green;
+}
+
+.button-invest:hover {
+    background-color: #1da94f14;
+}
+
