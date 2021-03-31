@@ -29,7 +29,7 @@ export function getCurrentUser() {
     }
 
     return request({
-        url: API_BASE_URL + "/user/me",
+        url: API_BASE_URL + "/users/current",
         method: 'GET'
     });
 }
@@ -47,5 +47,19 @@ export function signup(signupRequest) {
         url: API_BASE_URL + "/auth/signup",
         method: 'POST',
         body: JSON.stringify(signupRequest)
+    });
+}
+
+export function getBalance() {
+    return request({
+        url: `${API_BASE_URL}/users/current/balance`,
+        method: 'GET'
+    });
+}
+
+export function requestDemoDeposit() {
+    return request({
+        url: `${API_BASE_URL}/demo/deposit`,
+        method: 'POST'
     });
 }

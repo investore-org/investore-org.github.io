@@ -1,4 +1,4 @@
-.page-not-found {
+.pop-up-container {
     max-width: 500px;
     margin: 0 auto;
     margin-top: 50px;
@@ -8,17 +8,22 @@
     text-align: center;
 }
 
-.page-not-found .title {
+.pop-up-container .title {
     font-size: 50px;
-    letter-spacing: 10px;
+    letter-spacing: 5px;
     margin-bottom: 10px;
 }
 
-.page-not-found .desc {
+.pop-up-container .desc {
     font-size: 20px;
-    margin-bottom: 20px;
+    margin: 10%;
 }
 
 .go-back-btn {
     min-width: 160px;
 }
+
+.deposit-button-container {
+    margin: 10%;
+}
+

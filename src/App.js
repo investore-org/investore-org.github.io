@@ -15,6 +15,11 @@ import Alert from 'react-s-alert';
 import 'react-s-alert/dist/s-alert-default.css';
 import 'react-s-alert/dist/s-alert-css-effects/slide.css';
 import './App.css';
+import ManualTrading from "./trading/manual/ManualTrading";
+import LoggedIn from "./user/logged-in/LoggedIn";
+import SilentPrivateRoute from "./common/SilentPrivateRoute";
+import PopUp from "./user/pop-up/PopUp";
+import DemoDeposit from "./user/demo/DemoDeposit";
 
 class App extends Component {
     constructor(props) {
@@ -24,9 +29,8 @@ class App extends Component {
             currentUser: null,
             loading: false
         }
-
-        this.loadCurrentlyLoggedInUser = this.loadCurrentlyLoggedInUser.bind(this);
-        this.handleLogout = this.handleLogout.bind(this);
+        // this.loadCurrentlyLoggedInUser = this.loadCurrentlyLoggedInUser.bind(this);
+        // this.handleLogout = this.handleLogout.bind(this);
     }
 
     loadCurrentlyLoggedInUser() {
@@ -49,6 +53,10 @@ class App extends Component {
         });
     }
 
+    componentDidMount() {
+        this.loadCurrentlyLoggedInUser();
+    }
+
     handleLogout() {
         localStorage.removeItem(ACCESS_TOKEN);
         this.setState({
@@ -56,10 +64,6 @@ class App extends Component {
             currentUser: null
         });
         Alert.success("You're safely logged out!");
-    }
-
-    componentDidMount() {
-        this.loadCurrentlyLoggedInUser();
     }
 
     render() {
@@ -72,7 +76,7 @@ class App extends Component {
         return (
             <div className="app">
                 <div className="app-top-box">
-                    <AppHeader authenticated={authenticated} onLogout={this.handleLogout}/>
+                    <AppHeader authenticated={authenticated} onLogout={() => this.handleLogout()}/>
                 </div>
                 <div className="app-body">
                     <Switch>
@@ -91,6 +95,21 @@ class App extends Component {
                                render={(props) => <Signup
                                    authenticated={authenticated} {...props} />}/>
                         <Route path="/oauth2/redirect" component={OAuth2RedirectHandler}/>
+                        <SilentPrivateRoute path="/logged-in"
+                                            authenticated={authenticated}
+                                            currentUser={this.state.currentUser}
+                                            component={LoggedIn}/>
+                        <SilentPrivateRoute path="/pop-up"
+                                            authenticated={authenticated}
+                                            currentUser={this.state.currentUser}
+                                            component={PopUp}/>
+                        <SilentPrivateRoute path="/demo-deposit"
+                                            authenticated={authenticated}
+                                            currentUser={this.state.currentUser}
+                                            component={DemoDeposit}/>
+                        <Route path="/manual"
+                               render={(props) => <ManualTrading
+                                   authenticated={authenticated} {...props} />}/>
                         <Route component={NotFound}/>
                     </Switch>
                 </div>

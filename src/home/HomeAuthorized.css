@@ -1,20 +1,39 @@
 @import "Home.css";
 
-.container-invest {
+.container-invest,
+.container-autotrade {
+    margin-top: 3%;
     display: flex;
     flex-flow: column;
     justify-content: center;
     padding: 0 40% 0 40%;
 }
 
-.button-invest {
+.button-manual-invest,
+.button-autotrade {
+    box-shadow: 0 0 10px dimgrey;
+    background-color: transparent;
+    cursor: pointer;
     height: 150px;
     padding: 25% 0;
     border: solid gray 2px;
     color: green;
 }
 
-.button-invest:hover {
+.button-manual-invest:hover,
+.button-autotrade:hover {
     background-color: #1da94f14;
 }
 
+.button--text {
+    margin-top: 15%;
+    color: #8cbeb7;
+    text-decoration: none;
+    word-wrap: break-word;
+    cursor: pointer;
+}
+
+.button--text:hover {
+    color: #a9ddd6;
+    text-decoration: none;
+}

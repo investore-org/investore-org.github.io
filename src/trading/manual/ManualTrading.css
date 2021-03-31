@@ -1,0 +1,21 @@
+
+.market {
+    width: 50%;
+    height: 100%;
+}
+
+.chart {
+    height: 50vh;
+    width: 100%;
+}
+
+.manual-trading-container {
+    display: flex;
+    justify-content: center;
+}
+
+.manual-trading-panel {
+    height: 200px;
+    background-color: #6f9f98;
+}
+
