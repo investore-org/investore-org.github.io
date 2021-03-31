@@ -10,13 +10,15 @@ class DemoDeposit extends Component {
     }
 
     componentDidMount() {
-        console.log("props in DemoDeposit mount", this.props)
-        this.setState({wallet: userService.requestDemoDeposit(this.props.currentUser)});
+        console.log("props in DemoDeposit mount", this.props);
+        userService.requestDemoDeposit(this.props.currentUser)
+            .catch(console.error)
+            .then(wallet => this.setState({wallet: wallet}));
     }
 
     render() {
         console.log("props in DemoDeposit", this.props)
-        console.log("state in DemoDeposit", this.stat)
+        console.log("state in DemoDeposit", this.state)
         if (!this.state?.wallet) {
             return <LoadingIndicator/>
         }

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Route, Switch} from 'react-router-dom';
+import {Redirect, Route, Switch} from 'react-router-dom';
 import AppHeader from './common/AppHeader';
 import Home from './home/Home';
 import Login from './user/login/Login';
@@ -27,7 +27,8 @@ class App extends Component {
         this.state = {
             authenticated: false,
             currentUser: null,
-            loading: false
+            loading: false,
+            loggedOut: false,
         }
         // this.loadCurrentlyLoggedInUser = this.loadCurrentlyLoggedInUser.bind(this);
         // this.handleLogout = this.handleLogout.bind(this);
@@ -45,12 +46,13 @@ class App extends Component {
                     authenticated: true,
                     loading: false
                 });
-            }).catch(error => {
-            console.error(error);
-            this.setState({
-                loading: false
+            })
+            .catch(error => {
+                console.error(error);
+                this.setState({
+                    loading: false
+                });
             });
-        });
     }
 
     componentDidMount() {
@@ -61,12 +63,19 @@ class App extends Component {
         localStorage.removeItem(ACCESS_TOKEN);
         this.setState({
             authenticated: false,
-            currentUser: null
+            currentUser: null,
+            loggedOut: true,
         });
         Alert.success("You're safely logged out!");
     }
 
     render() {
+        if (this.state.loggedOut) {
+            return <Redirect to={{
+                pathname: "/",
+                state: {from: this.props.location}
+            }}/>;
+        }
         if (this.state.loading) {
             return <LoadingIndicator/>
         }

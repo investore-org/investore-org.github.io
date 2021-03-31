@@ -3,7 +3,7 @@
     margin: 0 auto;
     margin-top: 50px;
     padding: 40px;
-    box-shadow: 0 0 50px darkgrey;
+    box-shadow: 0 0 50px #1a1f1b;
     border: 1px solid #052d0e;
     text-align: center;
 }

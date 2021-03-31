@@ -42,9 +42,11 @@ class Home extends Component {
         if (this.state.authenticated && !this.state.currentUser) {
             return <LoadingIndicator/>
         }
+        const state = {...this.state};
+        state.history = this.props.history;
         return this.state.authenticated
-            ? <HomeAuthorized {...this.state}/>
-            : <HomeAnonymous {...this.state}/>
+            ? <HomeAuthorized {...state}/>
+            : <HomeAnonymous {...state}/>
     }
 }
 

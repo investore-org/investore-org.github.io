@@ -34,7 +34,11 @@ class HomeAuthorized extends Component {
     }
 
     componentDidMount() {
-        this.setState({userBalance: userService.getUserBalance(this.props.currentUser)});
+        userService.getUserBalance(this.props.currentUser)
+            .catch(console.error)
+            .then(balance => {
+                this.setState({userBalance: balance})
+            });
     }
 
     getActiveBalance() {
