@@ -118,6 +118,7 @@ class App extends Component {
                                             component={DemoDeposit}/>
                         <Route path="/manual"
                                render={(props) => <ManualTrading
+                                   currentUser={this.state.currentUser}
                                    authenticated={authenticated} {...props} />}/>
                         <Route component={NotFound}/>
                     </Switch>
