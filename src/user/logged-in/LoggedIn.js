@@ -11,16 +11,19 @@ class LoggedIn extends Component {
     }
 
     componentDidMount() {
-        this.setState({userBalance: userService.getUserBalance(this.props.currentUser)});
+        userService.getUserBalance(this.props.currentUser)
+            .catch(console.error)
+            .then(balance => this.setState({userBalance: balance}));
     }
 
     render() {
         if (!this.state.userBalance) {
             return <LoadingIndicator/>
         }
+        console.log("wallet", this.state.userBalance);
         return <Redirect to={{
             pathname: (this.state.userBalance.activeBalance > 0 || this.state.userBalance.demoBalance > 0)
-                ? "/" : "/pop-up",
+                ? "/" : "/no-balance",
             state: {from: this.props.location}
         }}/>;
     }

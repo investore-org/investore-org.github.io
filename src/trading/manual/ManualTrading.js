@@ -3,6 +3,9 @@ import TradingViewWidget from 'react-tradingview-widget';
 import './ManualTrading.css';
 import userService from "../../user/UserService";
 import LoadingIndicator from "../../common/LoadingIndicator";
+import {Redirect} from "react-router-dom";
+
+const BUY_USDT_AMOUNT = 50;
 
 export default class ManualTrading extends Component {
 
@@ -12,10 +15,15 @@ export default class ManualTrading extends Component {
     }
 
     componentDidMount() {
-        userService.getUserBalance(this.props.currentUser)
+        userService.getUserBalance()
             .catch(console.error)
             .then(balance => {
                 this.setState({userBalance: balance})
+            });
+        userService.getOrders("BTC", "USDT")
+            .catch(console.error)
+            .then(orders => {
+                this.setState({orders: orders})
             });
     }
 
@@ -28,10 +36,51 @@ export default class ManualTrading extends Component {
     }
 
     render() {
+        if (this.state.redirectToNoMoney) {
+            return <Redirect
+                to={{
+                    pathname: '/no-balance',
+                    state: {from: this.props.location}
+                }}
+            />
+        }
         if (!this.state.userBalance) {
             return <LoadingIndicator/>
         }
         const market = "BTCUSDT";
+        const asset = "BTC";
+        const quotable = "USDT";
+        const sign = "$"
+        let totalBalance = this.getDemoBalance() + this.getActiveBalance();
+        const onClickBuy = () => {
+            if (totalBalance < BUY_USDT_AMOUNT) {
+                this.setState({redirectToNoMoney: true});
+            } else {
+                userService.sendBuy(asset, quotable, BUY_USDT_AMOUNT).catch(console.error)
+            }
+        };
+        let buildOrder = order => (
+            <div className="manual-trading-panel--order">
+                <div className="manual-trading-panel--order-info-row">
+                    market: {order.asset}/{order.quotable}
+                </div>
+                <div className="manual-trading-panel--order-info-row">
+                    status: {order.status}
+                </div>
+                <div className="manual-trading-panel--order-info-row">
+                    side: {order.side}
+                </div>
+                <div className="manual-trading-panel--order-info-row">
+                    amount: {order.amount} {order.quotable}
+                </div>
+                <div className="manual-trading-panel--order-info-row">
+                    price: {order.price}
+                </div>
+            </div>
+        );
+        let orders = this.state.orders || [];
+        // let firstOrders = orders.length > 3 ? orders.slice(0, 3) : orders;
+        // let restOfOrders = orders.length > 3 ? orders.slice(3, orders.length) : [];
         return (
             <div className="manual-trading-container">
                 <div className="market">
@@ -54,14 +103,19 @@ export default class ManualTrading extends Component {
                         <div className="manual-trading-panel--info-row">
                             <div className="manual-trading-panel-info-row--balance">
                                 <span className="manual-trading-panel-info-row-balance--text">
-                                    Your current balance:
+                                    Your current balance:&nbsp;
                                 </span>
                                 <span className="manual-trading-panel-info-row-balance--value">
-                                    {this.getDemoBalance() + this.getActiveBalance()}
+                                    {sign}{totalBalance}
                                 </span>
                             </div>
                         </div>
-                        <div className="manual-trading-panel--button--buy">BUY</div>
+                        <div className="manual-trading-panel--buttons-container">
+                            <div className="manual-trading-panel--buttons-container-row">
+                                <div onClick={onClickBuy} className="manual-trading-panel--button--buy">BUY</div>
+                                {orders.map(buildOrder)}
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

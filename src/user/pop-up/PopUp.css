@@ -19,8 +19,25 @@
     margin: 10%;
 }
 
+.positive-btn,
 .go-back-btn {
     min-width: 160px;
+}
+
+.positive-btn {
+    background-color: #6eec7a2e;
+}
+
+.go-back-btn {
+    background-color: #8cbeb72e;
+}
+
+.positive-btn:hover {
+    background-color: #6eec7a70;
+}
+
+.go-back-btn:hover {
+    background-color: #8cbeb770;
 }
 
 .deposit-button-container {

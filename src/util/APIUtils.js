@@ -63,3 +63,24 @@ export function requestDemoDeposit() {
         method: 'POST'
     });
 }
+
+export function sendBuy(asset, quotable, amount) {
+    return request({
+        url: `${API_BASE_URL}/orders`,
+        method: 'POST',
+        body: JSON.stringify({
+            asset: asset,
+            quotable: quotable,
+            side: 'BUY',
+            amount: amount,
+        }),
+    });
+}
+
+export function getOrders(asset, quotable) {
+    return request({
+        url: `${API_BASE_URL}/orders?asset=${asset}&quotable=${quotable}`,
+        method: 'GET',
+    });
+}
+

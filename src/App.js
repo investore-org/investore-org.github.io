@@ -76,12 +76,19 @@ class App extends Component {
                 state: {from: this.props.location}
             }}/>;
         }
-        if (this.state.loading) {
-            return <LoadingIndicator/>
-        }
         let authenticated = this.state.authenticated;
         console.log("authenticated in app", authenticated);
 
+        if (this.state.loading) {
+            return (
+                <div className="app">
+                    <div className="app-top-box">
+                        <AppHeader authenticated={authenticated} onLogout={() => this.handleLogout()}/>
+                    </div>
+                    <LoadingIndicator/>
+                </div>
+            )
+        }
         return (
             <div className="app">
                 <div className="app-top-box">
@@ -108,7 +115,7 @@ class App extends Component {
                                             authenticated={authenticated}
                                             currentUser={this.state.currentUser}
                                             component={LoggedIn}/>
-                        <SilentPrivateRoute path="/pop-up"
+                        <SilentPrivateRoute path="/no-balance"
                                             authenticated={authenticated}
                                             currentUser={this.state.currentUser}
                                             component={PopUp}/>

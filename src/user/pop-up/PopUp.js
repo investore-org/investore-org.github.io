@@ -14,12 +14,12 @@ class PopUp extends Component {
                 </div>
                 <div className={"deposit-button-container"}>
                     <Link to="/deposit">
-                        <button className="go-back-btn btn btn-primary" type="button">Deposit</button>
+                        <button className="positive-btn btn btn-primary" type="button">Deposit</button>
                     </Link>
                 </div>
                 <div className={"deposit-button-container"}>
                     <Link to="/demo-deposit">
-                        <button className="go-back-btn btn btn-primary" type="button">Demo</button>
+                        <button className="positive-btn btn btn-primary" type="button">Demo</button>
                     </Link>
                 </div>
             </div>

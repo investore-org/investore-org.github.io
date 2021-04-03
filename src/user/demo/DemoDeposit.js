@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import userService from "../UserService";
-import LoadingIndicator from "../../common/LoadingIndicator";
-import {Redirect} from "react-router-dom";
+import {Link, Redirect} from "react-router-dom";
+import "../pop-up/PopUp.css";
 
 class DemoDeposit extends Component {
     constructor(props) {
@@ -10,22 +10,45 @@ class DemoDeposit extends Component {
     }
 
     componentDidMount() {
-        console.log("props in DemoDeposit mount", this.props);
-        userService.requestDemoDeposit(this.props.currentUser)
-            .catch(console.error)
-            .then(wallet => this.setState({wallet: wallet}));
     }
 
     render() {
-        console.log("props in DemoDeposit", this.props)
-        console.log("state in DemoDeposit", this.state)
-        if (!this.state?.wallet) {
-            return <LoadingIndicator/>
+        // if (!this.state?.wallet) {
+        //     return <LoadingIndicator/>
+        // }
+        console.log("wallet", this.state.wallet);
+        if (this.state?.wallet?.demoBalance > 0) {
+            return <Redirect to={{
+                pathname: "/",
+                state: {from: this.props.location}
+            }}/>;
         }
-        return <Redirect to={{
-            pathname: (this.state.wallet.demoBalance > 0) ? "/" : "/pop-up",
-            state: {from: this.props.location}
-        }}/>;
+        const onDemoMoneyRequested = () => {
+            userService.requestDemoDeposit(this.props.currentUser)
+                .catch(console.error)
+                .then(wallet => this.setState({wallet: wallet}));
+        }
+        return (
+            <div className="pop-up-container">
+                <h1 className="title">
+                    Demo
+                </h1>
+                <div className="desc">
+                    Proceed to get $100 on your demo balance
+                </div>
+                <div className={"deposit-button-container"}>
+                    <button className="positive-btn btn btn-primary"
+                            onClick={() => onDemoMoneyRequested()}
+                            type="button">Proceed
+                    </button>
+                </div>
+                <div className={"deposit-button-container"}>
+                    <Link to="/">
+                        <button className="go-back-btn btn btn-primary" type="button">Go Back</button>
+                    </Link>
+                </div>
+            </div>
+        )
     }
 }
 

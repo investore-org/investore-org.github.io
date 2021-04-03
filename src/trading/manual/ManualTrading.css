@@ -15,7 +15,7 @@
 }
 
 .manual-trading-panel {
-    height: 200px;
+    min-height: 200px;
     background-color: #6f9f98;
 }
 
@@ -23,3 +23,46 @@
     padding: 1%;
     background-color: #639089;
 }
+
+.manual-trading-panel--buttons-container {
+    padding: 1%;
+    display: flex;
+    flex-flow: column;
+}
+
+.manual-trading-panel--buttons-container-row {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.manual-trading-panel--order:hover {
+    background-color: rgba(146, 248, 228, 0.3);
+}
+
+.manual-trading-panel--order {
+    padding: 1%;
+}
+
+.manual-trading-panel--order,
+.manual-trading-panel--button--buy {
+    height: 150px;
+    width: 25%;
+    border: 1px solid blanchedalmond;
+}
+
+.manual-trading-panel--button--buy {
+    padding: 60px 10% 5%;
+    cursor: pointer;
+    background-color: rgba(146, 248, 171, 0.2);
+}
+
+.manual-trading-panel--button--buy:hover {
+    border: 1px solid #75f339;
+    background-color: rgba(146, 248, 171, 0.3);
+}
+
+.manual-trading-panel--button--buy:active {
+    background-color: rgba(146, 248, 171, 0.4);
+}
+
+

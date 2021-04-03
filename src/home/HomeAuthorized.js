@@ -53,10 +53,15 @@ class HomeAuthorized extends Component {
         if (!this.state.userBalance) {
             return <LoadingIndicator/>
         }
-        if (this.getActiveBalance() > 0 || this.getDemoBalance() > 0) {
+        const balance = this.getActiveBalance() > 0 ? this.getActiveBalance() : this.getDemoBalance();
+        if (balance > 0) {
+            const sign = "$";
             return (
                 <div className="home-container">
                     <div className="container">
+                        <div className="container-balance-info">
+                            <span className="container-balance-info-text">Your funds: {sign}{balance}</span>
+                        </div>
                         <div className="container-invest">
                             <div className="button-manual-invest"
                                  onClick={() => this.onManualInvestClick()}>
@@ -75,8 +80,9 @@ class HomeAuthorized extends Component {
                 </div>
             )
         }
+        console.log("balance", balance);
         return <Redirect to={{
-            pathname: "/pop-up",
+            pathname: "/no-balance",
             state: {from: this.props.location}
         }}/>;
     }
