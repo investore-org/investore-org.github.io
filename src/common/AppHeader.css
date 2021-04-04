@@ -10,6 +10,10 @@
     font-size: 1.35em;
 }
 
+.app-body {
+    padding-top: 60px;
+}
+
 .app-branding {
     float: left;
 }
@@ -46,6 +50,8 @@
 }
 
 .app-top-box {
+    position: fixed;
+    width: 100%;
     background-color: #2e3532;
     box-shadow: 0 5px 10px #2e3532;
 }

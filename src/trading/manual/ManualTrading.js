@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
-import TradingViewWidget from 'react-tradingview-widget';
 import './ManualTrading.css';
 import userService from "../../user/UserService";
 import LoadingIndicator from "../../common/LoadingIndicator";
 import {Redirect} from "react-router-dom";
+import Chart from "../../chart/Chart";
 
 const BUY_USDT_AMOUNT = 50;
 
@@ -60,7 +60,7 @@ export default class ManualTrading extends Component {
             }
         };
         let buildOrder = order => (
-            <div className="manual-trading-panel--order">
+            <div key={order.id} className="manual-trading-panel--order">
                 <div className="manual-trading-panel--order-info-row">
                     market: {order.asset}/{order.quotable}
                 </div>
@@ -84,36 +84,24 @@ export default class ManualTrading extends Component {
         return (
             <div className="manual-trading-container">
                 <div className="market">
-                    <div className="chart">
-                        <TradingViewWidget
-                            symbol={"BINANCE:" + market}
-                            autosize
-                            interval="1"
-                            timezone="Etc/UTC"
-                            theme="Dark"
-                            locale="en"
-                            toolbar_bg="#f1f3f6"
-                            enable_publishing={false}
-                            hide_side_toolbar={false}
-                            allow_symbol_change={false}
-                            container_id="tradingview_3d521"
-                        />
-                    </div>
-                    <div className="manual-trading-panel">
-                        <div className="manual-trading-panel--info-row">
-                            <div className="manual-trading-panel-info-row--balance">
+                    <Chart symbol={market}/>
+                    <div className="manual-trading-panel--container">
+                        <div onClick={onClickBuy} className="manual-trading-panel--button--buy">BUY</div>
+                        <div className="manual-trading-panel">
+                            <div className="manual-trading-panel--info-row">
+                                <div className="manual-trading-panel-info-row--balance">
                                 <span className="manual-trading-panel-info-row-balance--text">
                                     Your current balance:&nbsp;
                                 </span>
-                                <span className="manual-trading-panel-info-row-balance--value">
+                                    <span className="manual-trading-panel-info-row-balance--value">
                                     {sign}{totalBalance}
                                 </span>
+                                </div>
                             </div>
-                        </div>
-                        <div className="manual-trading-panel--buttons-container">
-                            <div className="manual-trading-panel--buttons-container-row">
-                                <div onClick={onClickBuy} className="manual-trading-panel--button--buy">BUY</div>
-                                {orders.map(buildOrder)}
+                            <div className="manual-trading-panel--buttons-container">
+                                <div className="manual-trading-panel--buttons-container-row">
+                                    {orders.map(buildOrder)}
+                                </div>
                             </div>
                         </div>
                     </div>
