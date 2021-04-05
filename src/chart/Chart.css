@@ -12,8 +12,13 @@
     justify-content: flex-end;
 }
 
-.kline {
+.kline,
+.kline-upper,
+.kline-lower {
     position: relative;
+}
+
+.kline-wrap {
 }
 
 .chart-wide-options {

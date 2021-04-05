@@ -59,14 +59,21 @@ export default class Chart extends Component {
                 const isUpwards = kline.openPrice < kline.closePrice;
                 const lowPrice = !isUpwards ? kline.closePrice : kline.openPrice;
                 const highPrice = isUpwards ? kline.closePrice : kline.openPrice;
+                let highTop = (maxPrice - kline.highestPrice) / priceK;
+                let highHeight = (kline.highestPrice - highPrice) / priceK;
+                let lowTop = (maxPrice - lowPrice) / priceK;
+                let lowHeight = (lowPrice - kline.lowestPrice) / priceK;
+                let height = (highPrice - lowPrice) / priceK;
+                let top = (maxPrice - highPrice) / priceK;
                 return {
                     origin: kline,
                     isUpwards: isUpwards,
-                    bottom: (lowPrice - minPrice) / priceK,
-                    top: (maxPrice - highPrice) / priceK,
-                    highestTop: (maxPrice - kline.highestPrice) / priceK,
-                    lowestBottom: (kline.lowestPrice - minPrice) / priceK,
-                    height: (highPrice - lowPrice) / priceK,
+                    highTop: highTop,
+                    highHeight: highHeight,
+                    top: top - highHeight,
+                    height: height,
+                    lowTop: lowTop - highHeight - height,
+                    lowHeight: lowHeight,
                 }
             });
             let newState = {
@@ -111,16 +118,38 @@ export default class Chart extends Component {
                             return null;
                         }
                         usedTimes[line.origin.openTime] = true;
-                        return <div key={line.origin.openTime}
-                                    style={{
-                                        backgroundColor: line.isUpwards ? "green" : "red",
-                                        top: line.top,
-                                        bottom: line.bottom,
-                                        height: line.height,
-                                        width: (2 / (this.state.zoomIndex + 1)) + "px",
-                                    }}
-                                    className="kline">
-                        </div>;
+                        let backgroundColor = line.isUpwards ? "green" : "red";
+                        return (
+                            <div className="kline-wrap">
+                                <div key={"kline-upper-" + line.origin.openTime}
+                                     style={{
+                                         backgroundColor: backgroundColor,
+                                         top: line.highTop,
+                                         height: line.highHeight,
+                                         width: `${(2 / (this.state.zoomIndex + 1)) / 10}px`,
+                                     }}
+                                     className="kline-upper">
+                                </div>
+                                <div key={"kline-" + line.origin.openTime}
+                                     style={{
+                                         backgroundColor: backgroundColor,
+                                         top: line.top,
+                                         height: line.height,
+                                         width: `${2 / (this.state.zoomIndex + 1)}px`,
+                                     }}
+                                     className="kline">
+                                </div>
+                                <div key={"kline-lower-" + line.origin.openTime}
+                                     style={{
+                                         backgroundColor: backgroundColor,
+                                         top: line.lowTop,
+                                         height: line.lowHeight,
+                                         width: `${(2 / (this.state.zoomIndex + 1)) / 10}px`,
+                                     }}
+                                     className="kline-lower">
+                                </div>
+                            </div>
+                        )
                     })}
                 </div>
             </div>,
