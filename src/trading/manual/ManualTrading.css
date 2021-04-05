@@ -31,6 +31,7 @@
 
 .manual-trading-panel--info-row {
     padding: 1%;
+    cursor: default;
     background-color: #639089;
 }
 
@@ -51,9 +52,7 @@
 
 .manual-trading-panel--order {
     padding: 1%;
-}
-
-.manual-trading-panel--order {
+    cursor: default;
     z-index: 6;
     height: 150px;
     width: 25%;
