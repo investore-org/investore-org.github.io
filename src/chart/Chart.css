@@ -1,13 +1,13 @@
 .chart-wide {
     width: calc(100% - 2px);
     position: fixed;
-    height: 85%;
+    height: 83%;
 }
 
 .klines {
     display: flex;
     flex-flow: row;
-    width: 80%;
+    width: 85%;
     height: 90%;
     justify-content: flex-end;
 }
