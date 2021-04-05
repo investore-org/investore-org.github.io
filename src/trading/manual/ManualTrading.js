@@ -86,6 +86,7 @@ export default class ManualTrading extends Component {
                 <div className="market">
                     <Chart symbol={market}/>
                     <div className="manual-trading-panel--container">
+                        <div className="manual-trading-panel--container-invisible">&nbsp;</div>
                         <div onClick={onClickBuy} className="manual-trading-panel--button--buy">BUY</div>
                         <div className="manual-trading-panel">
                             <div className="manual-trading-panel--info-row">

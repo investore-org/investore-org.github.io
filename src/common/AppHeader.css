@@ -1,7 +1,7 @@
 .app-header {
     height: 60px;
-    position: relative;
     z-index: 10;
+    padding: 0 5%;
 }
 
 .app-title {
@@ -50,6 +50,7 @@
 }
 
 .app-top-box {
+    z-index: 2;
     position: fixed;
     width: 100%;
     background-color: #2e3532;

@@ -2,9 +2,8 @@ import React, {Component} from 'react';
 import './Chart.css'
 import binanceApi from "../binance/binanceApi";
 
-const CHART_HEIGHT = 600;
+const CHART_HEIGHT = 550;
 const startZoom = 0.2;
-const startDepth = 500;
 const MINUTE_INTERVAL = "1m";
 
 export default class Chart extends Component {
