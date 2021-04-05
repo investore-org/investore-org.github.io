@@ -112,45 +112,47 @@ export default class Chart extends Component {
         let usedTimes = {};
         return [
             <div key={"chart-wide"} className={"chart-wide"}>
-                <div className="klines">
-                    {this.state.lines.map(line => {
-                        if (usedTimes[line.origin.openTime]) {
-                            return null;
-                        }
-                        usedTimes[line.origin.openTime] = true;
-                        let backgroundColor = line.isUpwards ? "green" : "red";
-                        return (
-                            <div className="kline-wrap">
-                                <div key={"kline-upper-" + line.origin.openTime}
-                                     style={{
-                                         backgroundColor: backgroundColor,
-                                         top: line.highTop,
-                                         height: line.highHeight,
-                                         width: `${(2 / (this.state.zoomIndex + 1)) / 10}px`,
-                                     }}
-                                     className="kline-upper">
+                <div className="chart-wide-wrap">
+                    <div className="klines">
+                        {this.state.lines.map(line => {
+                            if (usedTimes[line.origin.openTime]) {
+                                return null;
+                            }
+                            usedTimes[line.origin.openTime] = true;
+                            let backgroundColor = line.isUpwards ? "green" : "red";
+                            return (
+                                <div className="kline-wrap">
+                                    <div key={"kline-upper-" + line.origin.openTime}
+                                         style={{
+                                             backgroundColor: backgroundColor,
+                                             top: line.highTop,
+                                             height: line.highHeight,
+                                             width: `${(2 / (this.state.zoomIndex + 1)) / 10}px`,
+                                         }}
+                                         className="kline-upper">
+                                    </div>
+                                    <div key={"kline-" + line.origin.openTime}
+                                         style={{
+                                             backgroundColor: backgroundColor,
+                                             top: line.top,
+                                             height: line.height,
+                                             width: `${2.1 / (this.state.zoomIndex + 1)}px`,
+                                         }}
+                                         className="kline">
+                                    </div>
+                                    <div key={"kline-lower-" + line.origin.openTime}
+                                         style={{
+                                             backgroundColor: backgroundColor,
+                                             top: line.lowTop,
+                                             height: line.lowHeight,
+                                             width: `${(2 / (this.state.zoomIndex + 1)) / 10}px`,
+                                         }}
+                                         className="kline-lower">
+                                    </div>
                                 </div>
-                                <div key={"kline-" + line.origin.openTime}
-                                     style={{
-                                         backgroundColor: backgroundColor,
-                                         top: line.top,
-                                         height: line.height,
-                                         width: `${2.1 / (this.state.zoomIndex + 1)}px`,
-                                     }}
-                                     className="kline">
-                                </div>
-                                <div key={"kline-lower-" + line.origin.openTime}
-                                     style={{
-                                         backgroundColor: backgroundColor,
-                                         top: line.lowTop,
-                                         height: line.lowHeight,
-                                         width: `${(2 / (this.state.zoomIndex + 1)) / 10}px`,
-                                     }}
-                                     className="kline-lower">
-                                </div>
-                            </div>
-                        )
-                    })}
+                            )
+                        })}
+                    </div>
                 </div>
             </div>,
             <div key="chart-wide-options" className="chart-wide-options">

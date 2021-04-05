@@ -2,13 +2,19 @@
     width: calc(100% - 2px);
     position: fixed;
     height: 83%;
+    padding: 1%;
+}
+
+.chart-wide-wrap {
+    border: 1px solid grey;
+    height: 100%;
 }
 
 .klines {
     display: flex;
     flex-flow: row;
     width: 85%;
-    height: 90%;
+    height: 100%;
     justify-content: flex-end;
 }
 
