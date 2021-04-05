@@ -117,7 +117,7 @@ export default class Chart extends Component {
                                         top: line.top,
                                         bottom: line.bottom,
                                         height: line.height,
-                                        minWidth: this.state.zoomK + "%",
+                                        width: (2 / (this.state.zoomIndex + 1)) + "px",
                                     }}
                                     className="kline">
                         </div>;
