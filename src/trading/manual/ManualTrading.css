@@ -21,6 +21,7 @@
 }
 
 .manual-trading-panel {
+    pointer-events: auto;
     width: 100%;
     opacity: 0.7;
     z-index: 5;
@@ -60,14 +61,14 @@
 }
 
 .manual-trading-panel--button--buy {
+    pointer-events: auto;
     border: 1px solid blanchedalmond;
-    height: 40px;
+    height: 50px;
     z-index: 6;
     width: 15%;
-    opacity: 0.8;
     padding: 2% 5% 1%;
     cursor: pointer;
-    background-color: rgba(146, 248, 171, 0.7);
+    background-color: rgba(146, 248, 171, 0.9);
     position: absolute;
     top: 85%;
 }
@@ -76,10 +77,11 @@
 .manual-trading-panel--button--buy:hover {
     opacity: 1;
     border: 1px solid #75f339;
-    background-color: rgba(146, 248, 171, 0.8);
+    background-color: rgba(146, 248, 171, 0.95);
 }
 
 .manual-trading-panel--container {
+    pointer-events: none;
     position: absolute;
     height: 90%;
     width: 50%;
@@ -91,6 +93,7 @@
 }
 
 .manual-trading-panel--container-invisible {
+    pointer-events: none;
     width: 100%;
     top: 0;
     bottom: 25%;

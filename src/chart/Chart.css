@@ -25,6 +25,14 @@
 }
 
 .kline-wrap {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+}
+
+.kline-inner {
+    width: 1px;
+    position: relative;
 }
 
 .chart-wide-options {

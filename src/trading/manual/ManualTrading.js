@@ -3,7 +3,7 @@ import './ManualTrading.css';
 import userService from "../../user/UserService";
 import LoadingIndicator from "../../common/LoadingIndicator";
 import {Redirect} from "react-router-dom";
-import Chart from "../../chart/Chart";
+import ChartTradingView from "../../chart/ChartTradingView";
 
 const BUY_USDT_AMOUNT = 50;
 
@@ -84,7 +84,7 @@ export default class ManualTrading extends Component {
         return (
             <div className="manual-trading-container">
                 <div className="market">
-                    <Chart symbol={market}/>
+                    <ChartTradingView symbol={market}/>
                     <div className="manual-trading-panel--container">
                         <div className="manual-trading-panel--container-invisible">&nbsp;</div>
                         <div onClick={onClickBuy} className="manual-trading-panel--button--buy">BUY</div>

@@ -136,7 +136,7 @@ export default class Chart extends Component {
                                              backgroundColor: backgroundColor,
                                              top: line.top,
                                              height: line.height,
-                                             width: `${2.1 / (this.state.zoomIndex + 1)}px`,
+                                             width: `${2.5 / (this.state.zoomIndex + 1)}px`,
                                          }}
                                          className="kline">
                                     </div>
