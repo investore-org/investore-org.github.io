@@ -1,4 +1,11 @@
-import {getBalance, getOrders, requestDemoDeposit, sendBuy} from "../util/APIUtils";
+import {
+    getAutotradingOrders,
+    getBalance,
+    getOrders,
+    requestDemoDeposit,
+    sendAutotradingInvest,
+    sendBuy
+} from "../util/APIUtils";
 
 class UserService {
     async getUserBalance() {
@@ -13,8 +20,16 @@ class UserService {
         return await sendBuy(asset, quotable, amount)
     }
 
+    async sendAutotradingInvest(asset, quotable, amount) {
+        return await sendAutotradingInvest(asset, quotable, amount)
+    }
+
     async getOrders(asset, quotable) {
         return await getOrders(asset, quotable)
+    }
+
+    async getAutotradingOrders(asset, quotable) {
+        return await getAutotradingOrders(asset, quotable)
     }
 }
 

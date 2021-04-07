@@ -5,7 +5,7 @@ import LoadingIndicator from "../../common/LoadingIndicator";
 import {Redirect} from "react-router-dom";
 import ChartTradingView from "../../chart/ChartTradingView";
 
-const BUY_USDT_AMOUNT = 50;
+const INVEST_USDT_AMOUNT = 50;
 
 export default class AutoTrading extends Component {
 
@@ -20,7 +20,7 @@ export default class AutoTrading extends Component {
             .then(balance => {
                 this.setState({userBalance: balance})
             });
-        userService.getOrders("BTC", "USDT")
+        userService.getAutotradingOrders("BTC", "USDT")
             .catch(console.error)
             .then(orders => {
                 this.setState({orders: orders})
@@ -29,6 +29,10 @@ export default class AutoTrading extends Component {
 
     getActiveBalance() {
         return +this.state.userBalance.activeBalance
+    }
+
+    getAutotradingBalance() {
+        return +this.state.userBalance.autoTradingBalance
     }
 
     getDemoBalance() {
@@ -52,11 +56,12 @@ export default class AutoTrading extends Component {
         const quotable = "USDT";
         const sign = "$"
         let totalBalance = this.getDemoBalance() + this.getActiveBalance();
-        const onClickBuy = () => {
-            if (totalBalance < BUY_USDT_AMOUNT) {
+        let autoTradingBalance = this.getAutotradingBalance();
+        const onClickInvest = () => {
+            if (totalBalance < INVEST_USDT_AMOUNT) {
                 this.setState({redirectToNoMoney: true});
             } else {
-                userService.sendBuy(asset, quotable, BUY_USDT_AMOUNT).catch(console.error)
+                userService.sendAutotradingInvest(asset, quotable, INVEST_USDT_AMOUNT).catch(console.error)
             }
         };
         let buildOrder = order => (
@@ -79,24 +84,28 @@ export default class AutoTrading extends Component {
             </div>
         );
         let orders = this.state.orders || [];
-        // let firstOrders = orders.length > 3 ? orders.slice(0, 3) : orders;
-        // let restOfOrders = orders.length > 3 ? orders.slice(3, orders.length) : [];
         return (
             <div className="auto-trading-container">
                 <div className="market">
                     <ChartTradingView symbol={market}/>
                     <div className="auto-trading-panel--container">
                         <div className="auto-trading-panel--container-invisible">&nbsp;</div>
-                        <div onClick={onClickBuy} className="auto-trading-panel--button--buy">BUY</div>
+                        <div onClick={onClickInvest} className="auto-trading-panel--button--buy">Invest</div>
                         <div className="auto-trading-panel">
                             <div className="auto-trading-panel--info-row">
                                 <div className="auto-trading-panel-info-row--balance">
-                                <span className="auto-trading-panel-info-row-balance--text">
-                                    Your current balance:&nbsp;
-                                </span>
+                                    <span className="auto-trading-panel-info-row-balance--text">
+                                        Your total balance:&nbsp;
+                                    </span>
                                     <span className="auto-trading-panel-info-row-balance--value">
-                                    {sign}{totalBalance}
-                                </span>
+                                        {sign}{totalBalance}
+                                    </span>
+                                    <span className="auto-trading-panel-info-row-balance--text">
+                                        &nbsp;Your autotrading balance:&nbsp;
+                                    </span>
+                                    <span className="auto-trading-panel-info-row-balance--value">
+                                        {sign}{autoTradingBalance}
+                                    </span>
                                 </div>
                             </div>
                             <div className="auto-trading-panel--buttons-container">
