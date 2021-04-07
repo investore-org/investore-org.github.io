@@ -51,17 +51,25 @@ export default class AutoTrading extends Component {
         if (!this.state.userBalance) {
             return <LoadingIndicator/>
         }
-        const market = "BTCUSDT";
-        const asset = "BTC";
-        const quotable = "USDT";
-        const sign = "$"
         let totalBalance = this.getDemoBalance() + this.getActiveBalance();
         let autoTradingBalance = this.getAutotradingBalance();
-        const onClickInvest = () => {
+        const sign = "$"
+
+        const markets = [
+            {market: "BTCUSDT", asset: "BTC", quotable: "USDT"},
+            {market: "ETHUSDT", asset: "ETH", quotable: "USDT"},
+            {market: "BNBUSDT", asset: "BNB", quotable: "USDT"},
+            {market: "ETHBTC", asset: "ETH", quotable: "BTC"},
+            {market: "BNBBTC", asset: "BNB", quotable: "BTC"},
+            {market: "BNBETH", asset: "BNB", quotable: "ETH"},
+        ];
+
+        const onClickInvest = (market) => {
             if (totalBalance < INVEST_USDT_AMOUNT) {
                 this.setState({redirectToNoMoney: true});
             } else {
-                userService.sendAutotradingInvest(asset, quotable, INVEST_USDT_AMOUNT).catch(console.error)
+                userService.sendAutotradingInvest(market.asset, market.quotable, INVEST_USDT_AMOUNT)
+                    .catch(console.error)
             }
         };
         let buildOrder = order => (
@@ -85,38 +93,42 @@ export default class AutoTrading extends Component {
         );
         let orders = this.state.orders || [];
         return (
-            <div className="auto-trading-container">
-                <div className="market">
-                    <ChartTradingView symbol={market}/>
-                    <div className="auto-trading-panel--container">
-                        <div className="auto-trading-panel--container-invisible">&nbsp;</div>
-                        <div onClick={onClickInvest} className="auto-trading-panel--button--buy">Invest</div>
-                        <div className="auto-trading-panel">
-                            <div className="auto-trading-panel--info-row">
-                                <div className="auto-trading-panel-info-row--balance">
+            <div className="auto-trading-container">{
+                markets.map(market => (
+                    <div className="market">
+                        <ChartTradingView symbol={market.market}/>
+                        <div className="auto-trading-panel--container">
+                            <div className="auto-trading-panel--container-invisible">&nbsp;</div>
+                            <div onClick={() => onClickInvest(market)}
+                                 className="auto-trading-panel--button--buy">Invest
+                            </div>
+                            <div className="auto-trading-panel">
+                                <div className="auto-trading-panel--info-row">
+                                    <div className="auto-trading-panel-info-row--balance">
                                     <span className="auto-trading-panel-info-row-balance--text">
                                         Your total balance:&nbsp;
                                     </span>
-                                    <span className="auto-trading-panel-info-row-balance--value">
+                                        <span className="auto-trading-panel-info-row-balance--value">
                                         {sign}{totalBalance}
                                     </span>
-                                    <span className="auto-trading-panel-info-row-balance--text">
+                                        <span className="auto-trading-panel-info-row-balance--text">
                                         &nbsp;Your autotrading balance:&nbsp;
                                     </span>
-                                    <span className="auto-trading-panel-info-row-balance--value">
+                                        <span className="auto-trading-panel-info-row-balance--value">
                                         {sign}{autoTradingBalance}
                                     </span>
+                                    </div>
                                 </div>
-                            </div>
-                            <div className="auto-trading-panel--buttons-container">
-                                <div className="auto-trading-panel--buttons-container-row">
-                                    {orders.map(buildOrder)}
+                                <div className="auto-trading-panel--buttons-container">
+                                    <div className="auto-trading-panel--buttons-container-row">
+                                        {orders.map(buildOrder)}
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
+                ))
+            }</div>
         )
     }
 }

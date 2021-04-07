@@ -17,12 +17,11 @@ export default class ChartTradingView extends Component {
     }
 
     render() {
-        const market = "BTCUSDT";
         return (
             <div key={"chart-wide"} className={"chart-wide"}>
                 <div className="chart-wide-wrap">
                     <TradingViewWidget
-                        symbol={"BINANCE:" + market}
+                        symbol={"BINANCE:" + this.props.symbol}
                         autosize
                         interval="1"
                         timezone="Etc/UTC"
