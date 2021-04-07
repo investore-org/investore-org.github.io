@@ -6,6 +6,7 @@ import {Redirect} from "react-router-dom";
 
 const manualTradingUrl = "/manual";
 const autoTradingUrl = "/autotrading";
+const advancedTradingUrl = "/advanced-trading";
 
 class HomeAuthorized extends Component {
 
@@ -22,7 +23,11 @@ class HomeAuthorized extends Component {
     }
 
     getAutotradeProfitValue() {
-        return "+3.4%"
+        return "+3.8%"
+    }
+
+    getAdvancedTradeProfitValue() {
+        return "+10.2%"
     }
 
     onManualInvestClick() {
@@ -31,6 +36,10 @@ class HomeAuthorized extends Component {
 
     onAutotradeInvestClick() {
         this.props.history.push(autoTradingUrl);
+    }
+
+    onAdvancedTradeInvestClick() {
+        this.props.history.push(advancedTradingUrl);
     }
 
     componentDidMount() {
@@ -63,17 +72,24 @@ class HomeAuthorized extends Component {
                             <span className="container-balance-info-text">Your funds: {sign}{balance}</span>
                         </div>
                         <div className="container-invest">
-                            <div className="button-manual-invest"
+                            <div className="button-invest"
                                  onClick={() => this.onManualInvestClick()}>
                                 {this.getInvestProfitValue()}
                                 <div className={"button--text"}>Manual</div>
                             </div>
                         </div>
-                        <div className="container-autotrade">
-                            <div className="button-autotrade"
+                        <div className="container-invest">
+                            <div className="button-invest"
                                  onClick={() => this.onAutotradeInvestClick()}>
                                 {this.getAutotradeProfitValue()}
                                 <div className={"button--text"}>Autotrade</div>
+                            </div>
+                        </div>
+                        <div className="container-invest">
+                            <div className="button-invest"
+                                 onClick={() => this.onAdvancedTradeInvestClick()}>
+                                {this.getAdvancedTradeProfitValue()}
+                                <div className={"button--text"}>Advanced</div>
                             </div>
                         </div>
                     </div>

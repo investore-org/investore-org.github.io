@@ -20,6 +20,7 @@ import LoggedIn from "./user/logged-in/LoggedIn";
 import SilentPrivateRoute from "./common/SilentPrivateRoute";
 import PopUp from "./user/pop-up/PopUp";
 import DemoDeposit from "./user/demo/DemoDeposit";
+import AutoTrading from "./trading/auto/AutoTrading";
 
 class App extends Component {
     constructor(props) {
@@ -125,6 +126,10 @@ class App extends Component {
                                             component={DemoDeposit}/>
                         <Route path="/manual"
                                render={(props) => <ManualTrading
+                                   currentUser={this.state.currentUser}
+                                   authenticated={authenticated} {...props} />}/>
+                        <Route path="/autotrading"
+                               render={(props) => <AutoTrading
                                    currentUser={this.state.currentUser}
                                    authenticated={authenticated} {...props} />}/>
                         <Route component={NotFound}/>

@@ -1,7 +1,6 @@
 @import "Home.css";
 
-.container-invest,
-.container-autotrade {
+.container-invest {
     margin-top: 3%;
     display: flex;
     flex-flow: column;
@@ -9,19 +8,17 @@
     padding: 0 40% 0 40%;
 }
 
-.button-manual-invest,
-.button-autotrade {
+.button-invest {
     box-shadow: 0 0 10px dimgrey;
     background-color: transparent;
     cursor: pointer;
-    height: 150px;
-    padding: 25% 0;
+    height: 120px;
+    padding: 10% 0;
     border: solid gray 2px;
     color: green;
 }
 
-.button-manual-invest:hover,
-.button-autotrade:hover {
+.button-invest:hover {
     background-color: #1da94f14;
 }
 

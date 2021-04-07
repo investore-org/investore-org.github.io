@@ -1,0 +1,103 @@
+.market {
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    display: flex;
+}
+
+.chart {
+    margin-left: 25%;
+    height: 50vh;
+    width: 50%;
+}
+
+.auto-trading-container {
+    display: flex;
+    justify-content: center;
+}
+
+.auto-trading-panel:hover {
+    opacity: 1;
+}
+
+.auto-trading-panel {
+    pointer-events: auto;
+    width: 100%;
+    opacity: 0.7;
+    z-index: 5;
+    background-color: #6f9f98;
+    position: absolute;
+    top: 93%;
+}
+
+.auto-trading-panel--info-row {
+    padding: 1%;
+    cursor: default;
+    background-color: #639089;
+}
+
+.auto-trading-panel--buttons-container {
+    padding: 1%;
+    display: flex;
+    flex-flow: column;
+}
+
+.auto-trading-panel--buttons-container-row {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.auto-trading-panel--order:hover {
+    background-color: rgba(146, 248, 228, 0.3);
+}
+
+.auto-trading-panel--order {
+    padding: 1%;
+    cursor: default;
+    z-index: 6;
+    height: 150px;
+    width: 25%;
+    border: 1px solid blanchedalmond;
+}
+
+.auto-trading-panel--button--buy {
+    pointer-events: auto;
+    border: 1px solid blanchedalmond;
+    height: 45px;
+    z-index: 6;
+    width: 15%;
+    padding: 2% 5% 1%;
+    cursor: pointer;
+    background-color: rgba(146, 248, 171, 0.9);
+    position: absolute;
+    top: 85%;
+}
+
+.auto-trading-panel--button--buy:active,
+.auto-trading-panel--button--buy:hover {
+    opacity: 1;
+    border: 1px solid #75f339;
+    background-color: rgba(146, 248, 171, 0.95);
+}
+
+.auto-trading-panel--container {
+    pointer-events: none;
+    position: absolute;
+    height: 90%;
+    width: 50%;
+    left: 25%;
+    display: flex;
+    flex-flow: column;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.auto-trading-panel--container-invisible {
+    pointer-events: none;
+    width: 100%;
+    top: 0;
+    bottom: 25%;
+    height: 85%;
+    position: absolute;
+}
+
