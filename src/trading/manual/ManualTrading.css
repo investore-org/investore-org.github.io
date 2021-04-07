@@ -63,7 +63,7 @@
 .manual-trading-panel--button--buy {
     pointer-events: auto;
     border: 1px solid blanchedalmond;
-    height: 50px;
+    height: 45px;
     z-index: 6;
     width: 15%;
     padding: 2% 5% 1%;

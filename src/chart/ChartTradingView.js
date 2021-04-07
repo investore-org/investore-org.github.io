@@ -2,9 +2,7 @@ import React, {Component} from 'react';
 import './Chart.css'
 import TradingViewWidget from 'react-tradingview-widget';
 
-const CHART_HEIGHT = 450;
 const startZoom = 0.2;
-const MINUTE_INTERVAL = "1m";
 
 export default class ChartTradingView extends Component {
     constructor(props) {
