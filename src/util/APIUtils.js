@@ -30,7 +30,7 @@ export function getCurrentUser() {
 
     return request({
         url: API_BASE_URL + "/users/current",
-        method: 'GET'
+        method: 'GET',
     });
 }
 
@@ -38,7 +38,7 @@ export function login(loginRequest) {
     return request({
         url: API_BASE_URL + "/auth/login",
         method: 'POST',
-        body: JSON.stringify(loginRequest)
+        body: JSON.stringify(loginRequest),
     });
 }
 
@@ -46,25 +46,33 @@ export function signup(signupRequest) {
     return request({
         url: API_BASE_URL + "/auth/signup",
         method: 'POST',
-        body: JSON.stringify(signupRequest)
+        body: JSON.stringify(signupRequest),
     });
 }
 
 export function getBalance() {
     return request({
         url: `${API_BASE_URL}/users/current/balance`,
-        method: 'GET'
+        method: 'GET',
     });
 }
 
 export function requestDemoDeposit() {
     return request({
         url: `${API_BASE_URL}/demo/deposit`,
-        method: 'POST'
+        method: 'POST',
     });
 }
 
 export function sendBuy(asset, quotable, amount) {
+    return sendInvest(asset, quotable, amount, 'MANUAL');
+}
+
+export function sendAutoTradingInvest(asset, quotable, amount) {
+    return sendInvest(asset, quotable, amount, 'AUTO');
+}
+
+function sendInvest(asset, quotable, amount, type) {
     return request({
         url: `${API_BASE_URL}/orders`,
         method: 'POST',
@@ -73,33 +81,22 @@ export function sendBuy(asset, quotable, amount) {
             quotable: quotable,
             side: 'BUY',
             amount: amount,
+            orderType: type,
         }),
     });
 }
 
-export function sendAutotradingInvest(asset, quotable, amount) {
-    return request({
-        url: `${API_BASE_URL}/investments/auto-trading`,
-        method: 'POST',
-        body: JSON.stringify({
-            asset: asset,
-            quotable: quotable,
-            side: 'BUY',
-            amount: amount,
-        }),
-    });
+export function getManualOrders(asset, quotable) {
+    return getOrders(asset, quotable, 'MANUAL');
 }
 
-export function getOrders(asset, quotable) {
-    return request({
-        url: `${API_BASE_URL}/orders?asset=${asset}&quotable=${quotable}`,
-        method: 'GET',
-    });
+export function getAutoTradingOrders(asset, quotable) {
+    return getOrders(asset, quotable, 'AUTO');
 }
 
-export function getAutotradingOrders(asset, quotable) {
+function getOrders(asset, quotable, orderType) {
     return request({
-        url: `${API_BASE_URL}/orders?asset=${asset}&quotable=${quotable}`,
+        url: `${API_BASE_URL}/orders?asset=${asset}&quotable=${quotable}&orderType=${orderType}`,
         method: 'GET',
     });
 }

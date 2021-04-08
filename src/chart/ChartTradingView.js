@@ -18,7 +18,7 @@ export default class ChartTradingView extends Component {
 
     render() {
         return (
-            <div key={"chart-wide"} className={"chart-wide"}>
+            <div key={"chart-wide-" + this.props.symbol} className={"chart-wide"}>
                 <div className="chart-wide-wrap">
                     <TradingViewWidget
                         symbol={"BINANCE:" + this.props.symbol}

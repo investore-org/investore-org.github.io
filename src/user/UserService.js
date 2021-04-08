@@ -1,9 +1,9 @@
 import {
-    getAutotradingOrders,
+    getAutoTradingOrders,
     getBalance,
-    getOrders,
+    getManualOrders,
     requestDemoDeposit,
-    sendAutotradingInvest,
+    sendAutoTradingInvest,
     sendBuy
 } from "../util/APIUtils";
 
@@ -20,16 +20,16 @@ class UserService {
         return await sendBuy(asset, quotable, amount)
     }
 
-    async sendAutotradingInvest(asset, quotable, amount) {
-        return await sendAutotradingInvest(asset, quotable, amount)
+    async sendAutoTradingInvest(asset, quotable, amount) {
+        return await sendAutoTradingInvest(asset, quotable, amount)
     }
 
-    async getOrders(asset, quotable) {
-        return await getOrders(asset, quotable)
+    async getManualOrders(asset, quotable) {
+        return await getManualOrders(asset, quotable)
     }
 
-    async getAutotradingOrders(asset, quotable) {
-        return await getAutotradingOrders(asset, quotable)
+    async getAutoTradingOrders(asset, quotable) {
+        return await getAutoTradingOrders(asset, quotable)
     }
 }
 

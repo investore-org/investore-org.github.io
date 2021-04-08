@@ -124,14 +124,14 @@ class App extends Component {
                                             authenticated={authenticated}
                                             currentUser={this.state.currentUser}
                                             component={DemoDeposit}/>
-                        <Route path="/manual"
-                               render={(props) => <ManualTrading
-                                   currentUser={this.state.currentUser}
-                                   authenticated={authenticated} {...props} />}/>
-                        <Route path="/autotrading"
-                               render={(props) => <AutoTrading
-                                   currentUser={this.state.currentUser}
-                                   authenticated={authenticated} {...props} />}/>
+                        <SilentPrivateRoute path="/manual"
+                                            authenticated={authenticated}
+                                            currentUser={this.state.currentUser}
+                                            component={ManualTrading}/>
+                        <SilentPrivateRoute path="/autotrading"
+                                            authenticated={authenticated}
+                                            currentUser={this.state.currentUser}
+                                            component={AutoTrading}/>
                         <Route component={NotFound}/>
                     </Switch>
                 </div>

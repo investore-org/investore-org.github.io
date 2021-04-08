@@ -20,7 +20,7 @@ export default class ManualTrading extends Component {
             .then(balance => {
                 this.setState({userBalance: balance})
             });
-        userService.getOrders("BTC", "USDT")
+        userService.getManualOrders("BTC", "USDT")
             .catch(console.error)
             .then(orders => {
                 this.setState({orders: orders})
