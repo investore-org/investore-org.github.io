@@ -13,6 +13,10 @@
     width: 50%;
 }
 
+.auto-trading-container .chart-wide {
+    position: relative;
+}
+
 .auto-trading-container {
     display: flex;
     justify-content: center;
@@ -86,21 +90,11 @@
 
 .auto-trading-panel--container {
     pointer-events: none;
-    height: 90%;
     width: 50%;
     left: 25%;
     display: flex;
     flex-flow: column;
     justify-content: flex-end;
     align-items: center;
-}
-
-.auto-trading-panel--container-invisible {
-    pointer-events: none;
-    width: 100%;
-    top: 0;
-    bottom: 25%;
-    height: 85%;
-    position: absolute;
 }
 

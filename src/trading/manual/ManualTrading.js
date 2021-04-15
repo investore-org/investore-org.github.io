@@ -6,6 +6,7 @@ import {Redirect} from "react-router-dom";
 import ChartTradingView from "../../chart/ChartTradingView";
 
 const BUY_USDT_AMOUNT = 50;
+let timer = null;
 
 export default class ManualTrading extends Component {
 
@@ -15,15 +16,39 @@ export default class ManualTrading extends Component {
     }
 
     componentDidMount() {
-        userService.getUserBalance()
-            .catch(console.error)
-            .then(balance => {
-                this.setState({userBalance: balance})
-            });
+        this.refreshBalances();
+        this.refreshOrders();
+        this.refreshOrdersDelayed();
+    }
+
+    componentWillUnmount() {
+        clearTimeout(timer);
+    }
+
+    refreshOrdersDelayed() {
+        if (timer) {
+            return;
+        }
+        timer = setTimeout(() => {
+            this.refreshOrders();
+            timer = null;
+            this.refreshOrdersDelayed();
+        }, 3_000)
+    }
+
+    refreshOrders() {
         userService.getManualOrders("BTC", "USDT")
             .catch(console.error)
             .then(orders => {
                 this.setState({orders: orders})
+            });
+    }
+
+    refreshBalances() {
+        userService.getUserBalance()
+            .catch(console.error)
+            .then(balance => {
+                this.setState({userBalance: balance})
             });
     }
 
@@ -33,6 +58,17 @@ export default class ManualTrading extends Component {
 
     getDemoBalance() {
         return +this.state.userBalance.demoBalance
+    }
+
+    getStatusText(status) {
+        switch (status) {
+            case 'CREATED':
+                return `created`;
+            case 'INIT_BUY_ORDER_SENT':
+                return `init buy order sent`;
+            case 'INIT_BUY_ORDER_FILLED':
+                return `init buy order filled`;
+        }
     }
 
     render() {
@@ -56,31 +92,42 @@ export default class ManualTrading extends Component {
             if (totalBalance < BUY_USDT_AMOUNT) {
                 this.setState({redirectToNoMoney: true});
             } else {
-                userService.sendBuy(asset, quotable, BUY_USDT_AMOUNT).catch(console.error)
+                userService.sendBuy(asset, quotable, BUY_USDT_AMOUNT)
+                    .catch(console.error)
+                    .then(newOrder => this.setState({
+                        orders: (this.state.orders || []).concat(newOrder)
+                    }, () => this.refreshBalances()))
             }
         };
         let buildOrder = order => (
             <div key={order.id} className="manual-trading-panel--order">
                 <div className="manual-trading-panel--order-info-row">
-                    market: {order.asset}/{order.quotable}
+                    market: {order.asset}-{order.quotable}
                 </div>
                 <div className="manual-trading-panel--order-info-row">
-                    status: {order.status}
+                    status: {this.getStatusText(order.status)}
                 </div>
                 <div className="manual-trading-panel--order-info-row">
                     side: {order.side}
                 </div>
                 <div className="manual-trading-panel--order-info-row">
-                    amount: {order.amount} {order.quotable}
+                    invested: {order.amountQuotable} {order.quotable}
                 </div>
                 <div className="manual-trading-panel--order-info-row">
-                    price: {order.price}
+                    bought: {order.boughtAssetQuantity} {order.asset}
+                </div>
+                <div className="manual-trading-panel--order-info-row">
+                    bought price: {order.buyOrderPrice}
+                </div>
+                <div className="manual-trading-panel--order-info-row">
+                    last price: {order.lastPrice}
+                </div>
+                <div className="manual-trading-panel--order-info-row">
+                    profit: {order.profit}
                 </div>
             </div>
         );
         let orders = this.state.orders || [];
-        // let firstOrders = orders.length > 3 ? orders.slice(0, 3) : orders;
-        // let restOfOrders = orders.length > 3 ? orders.slice(3, orders.length) : [];
         return (
             <div className="manual-trading-container">
                 <div className="market">

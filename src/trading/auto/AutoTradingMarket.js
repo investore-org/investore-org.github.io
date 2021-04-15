@@ -70,7 +70,7 @@ export default class AutoTradingMarket extends Component {
                     side: {order.side}
                 </div>
                 <div className="auto-trading-panel--order-info-row">
-                    amount: {order.amount} {order.quotable}
+                    amount: {order.amountQuotable} {order.quotable}
                 </div>
                 <div className="auto-trading-panel--order-info-row">
                     price: {order.price}

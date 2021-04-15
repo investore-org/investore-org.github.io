@@ -80,7 +80,7 @@ function sendInvest(asset, quotable, amount, type) {
             asset: asset,
             quotable: quotable,
             side: 'BUY',
-            amount: amount,
+            amountQuotable: amount,
             orderType: type,
         }),
     });
