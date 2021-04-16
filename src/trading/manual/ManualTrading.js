@@ -94,34 +94,44 @@ export default class ManualTrading extends Component {
                     }, () => this.refreshBalances()))
             }
         };
-        let buildOrder = order => (
-            <div key={order.id} className="manual-trading-panel--order">
-                <div className="manual-trading-panel--order-info-row">
-                    market: {order.asset}-{order.quotable}
+        let buildOrder = order => {
+            let className = "manual-trading-panel--order" + (order.real
+                ? " manual-trading-panel--order-real" : "");
+            return (
+                <div key={order.id} className={className}>
+                    <div className="manual-trading-panel--order-info-row">
+                        market: {order.asset}-{order.quotable}
+                    </div>
+                    <div className="manual-trading-panel--order-info-row">
+                        status: {this.getStatusText(order.status)}
+                    </div>
+                    <div className="manual-trading-panel--order-info-row">
+                        side: {order.side}
+                    </div>
+                    <div className="manual-trading-panel--order-info-row">
+                        invested: {order.amountQuotable} {order.quotable}
+                    </div>
+                    <div className="manual-trading-panel--order-info-row">
+                        bought: {order.boughtAssetQuantity} {order.asset}
+                    </div>
+                    <div className="manual-trading-panel--order-info-row">{
+                        order.sellOrderPrice
+                            ? `sold price: ${order.sellOrderPrice}`
+                            : `bought price: ${order.buyOrderPrice}`
+                    }
+                    </div>
+                    <div className="manual-trading-panel--order-info-row">
+                        last price: {order.lastPrice}
+                    </div>
+                    <div className="manual-trading-panel--order-info-row">
+                        profit: {order.profit}
+                    </div>
+                    <div className="manual-trading-panel--order-info-row">
+                        created: {new Date(order.createdDate).toLocaleString()}
+                    </div>
                 </div>
-                <div className="manual-trading-panel--order-info-row">
-                    status: {this.getStatusText(order.status)}
-                </div>
-                <div className="manual-trading-panel--order-info-row">
-                    side: {order.side}
-                </div>
-                <div className="manual-trading-panel--order-info-row">
-                    invested: {order.amountQuotable} {order.quotable}
-                </div>
-                <div className="manual-trading-panel--order-info-row">
-                    bought: {order.boughtAssetQuantity} {order.asset}
-                </div>
-                <div className="manual-trading-panel--order-info-row">
-                    bought price: {order.buyOrderPrice}
-                </div>
-                <div className="manual-trading-panel--order-info-row">
-                    last price: {order.lastPrice}
-                </div>
-                <div className="manual-trading-panel--order-info-row">
-                    profit: {order.profit}
-                </div>
-            </div>
-        );
+            );
+        };
         let orders = this.state.orders || [];
         return (
             <div className="manual-trading-container">
