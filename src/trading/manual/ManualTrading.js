@@ -63,14 +63,7 @@ export default class ManualTrading extends Component {
     }
 
     getStatusText(status) {
-        switch (status) {
-            case 'CREATED':
-                return `created`;
-            case 'INIT_BUY_ORDER_SENT':
-                return `init buy order sent`;
-            case 'INIT_BUY_ORDER_FILLED':
-                return `init buy order filled`;
-        }
+        return status.toLowerCase().replaceAll("_", " ")
     }
 
     render() {
