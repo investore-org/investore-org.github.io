@@ -40,7 +40,9 @@ export default class ManualTrading extends Component {
         userService.getManualOrders("BTC", "USDT")
             .catch(console.error)
             .then(orders => {
-                this.setState({orders: orders})
+                this.setState({
+                    orders: (orders || []).sort((a, b) => (b.profit || 0) - a.profit)
+                })
             });
     }
 
