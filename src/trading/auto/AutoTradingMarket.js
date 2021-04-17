@@ -14,14 +14,6 @@ export default class AutoTradingMarket extends Component {
         this.state = {...props};
     }
 
-    componentDidMount() {
-        userService.getAutoTradingOrders(this.props.market.asset, this.props.market.quotable)
-            .catch(console.error)
-            .then(orders => {
-                this.setState({orders: orders})
-            });
-    }
-
     getActiveBalance() {
         return +this.state.userBalance.activeBalance
     }
@@ -32,6 +24,10 @@ export default class AutoTradingMarket extends Component {
 
     getDemoBalance() {
         return +this.state.userBalance.demoBalance
+    }
+
+    getStatusText(status) {
+        return status.toLowerCase().replaceAll("_", " ")
     }
 
     render() {
@@ -61,19 +57,31 @@ export default class AutoTradingMarket extends Component {
         let buildOrder = order => (
             <div key={order.id} className="auto-trading-panel--order">
                 <div className="auto-trading-panel--order-info-row">
-                    market: {order.asset}/{order.quotable}
+                    market: {order.asset}-{order.quotable}
                 </div>
                 <div className="auto-trading-panel--order-info-row">
-                    status: {order.status}
+                    status: {this.getStatusText(order.status)}
                 </div>
                 <div className="auto-trading-panel--order-info-row">
                     side: {order.side}
                 </div>
                 <div className="auto-trading-panel--order-info-row">
-                    amount: {order.amountQuotable} {order.quotable}
+                    invested: {order.amountQuotable} {order.quotable}
                 </div>
                 <div className="auto-trading-panel--order-info-row">
-                    price: {order.price}
+                    bought: {order.boughtAssetQuantity} {order.asset}
+                </div>
+                <div className="auto-trading-panel--order-info-row">
+                    bought price: {order.buyOrderPrice}
+                </div>
+                <div className="auto-trading-panel--order-info-row">
+                    last price: {order.lastPrice}
+                </div>
+                <div className="auto-trading-panel--order-info-row">
+                    profit: {order.profit}
+                </div>
+                <div className="auto-trading-panel--order-info-row">
+                    created: {new Date(order.createdDate).toLocaleString()}
                 </div>
             </div>
         );

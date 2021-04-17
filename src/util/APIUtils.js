@@ -64,15 +64,15 @@ export function requestDemoDeposit() {
     });
 }
 
-export function sendBuy(asset, quotable, amount) {
-    return sendInvest(asset, quotable, amount, 'MANUAL');
+export function sendBuy(asset, quotable, amount, isReal) {
+    return sendInvest(asset, quotable, amount, 'MANUAL', isReal);
 }
 
 export function sendAutoTradingInvest(asset, quotable, amount) {
     return sendInvest(asset, quotable, amount, 'AUTO');
 }
 
-function sendInvest(asset, quotable, amount, type) {
+function sendInvest(asset, quotable, amount, type, isReal) {
     return request({
         url: `${API_BASE_URL}/orders`,
         method: 'POST',
@@ -82,7 +82,19 @@ function sendInvest(asset, quotable, amount, type) {
             side: 'BUY',
             amountQuotable: amount,
             orderType: type,
+            real: isReal,
         }),
+    });
+}
+
+export function sendCancel(orderId) {
+    return sendCommand("cancel", orderId)
+}
+
+function sendCommand(command, orderId) {
+    return request({
+        url: `${API_BASE_URL}/commands/orders/${command}/${orderId}`,
+        method: 'POST',
     });
 }
 

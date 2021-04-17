@@ -4,7 +4,8 @@ import {
     getManualOrders,
     requestDemoDeposit,
     sendAutoTradingInvest,
-    sendBuy
+    sendBuy,
+    sendCancel
 } from "../util/APIUtils";
 
 class UserService {
@@ -16,8 +17,8 @@ class UserService {
         return await requestDemoDeposit()
     }
 
-    async sendBuy(asset, quotable, amount) {
-        return await sendBuy(asset, quotable, amount)
+    async sendBuy(asset, quotable, amount, isReal) {
+        return await sendBuy(asset, quotable, amount, isReal)
     }
 
     async sendAutoTradingInvest(asset, quotable, amount) {
@@ -30,6 +31,10 @@ class UserService {
 
     async getAutoTradingOrders(asset, quotable) {
         return await getAutoTradingOrders(asset, quotable)
+    }
+
+    async sendCancel(investId) {
+        return await sendCancel(investId)
     }
 }
 

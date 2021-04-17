@@ -40,6 +40,16 @@
     background-color: #639089;
 }
 
+.manual-trading-panel--control-buttons-container {
+    width: 100%;
+    display: flex;
+    flex-flow: row;
+    justify-content: space-evenly;
+    align-content: center;
+    position: absolute;
+    top: 86%;
+}
+
 .manual-trading-panel--buttons-container {
     padding: 1%;
     display: flex;
@@ -56,12 +66,13 @@
 }
 
 .manual-trading-panel--order {
-    padding: 1%;
     cursor: default;
     z-index: 6;
     height: 165px;
     width: 20%;
     border: 1px solid blanchedalmond;
+    display: flex;
+    flex-flow: row;
 }
 
 .manual-trading-panel--button--buy {
@@ -73,8 +84,6 @@
     padding: 1% 0 0;
     cursor: pointer;
     background-color: rgba(146, 248, 171, 0.9);
-    position: absolute;
-    top: 85%;
     text-align: center;
 }
 
@@ -112,4 +121,54 @@
 
 .manual-trading-panel--order-real {
     border: #cd8383 1px solid;
+}
+
+.prev-market-button:hover,
+.next-market-button:hover {
+    opacity: 1;
+}
+
+.prev-market-button,
+.next-market-button {
+    opacity: 0.9;
+    position: fixed;
+    width: 8%;
+    height: 5%;
+    cursor: pointer;
+    background-color: rgba(146, 248, 171, 0.95);
+}
+
+.prev-market-button {
+    left: 0;
+    bottom: 0;
+}
+
+.next-market-button {
+    right: 0;
+    bottom: 0;
+}
+
+.manual-trading-panel--order-info-block {
+    padding: 3% 0 0 3%;
+    width: 90%;
+}
+
+.order-controls-panel {
+    width: 10%;
+}
+
+.order-control-button {
+    cursor: pointer;
+    width: 100%;
+    overflow-x: hidden;
+    text-align: center;
+}
+
+.order-control-cancel {
+    background-color: #cd8383;
+}
+
+
+.order-control-cancel:hover {
+    background-color: #b34343;
 }
