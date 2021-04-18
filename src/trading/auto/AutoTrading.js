@@ -72,12 +72,15 @@ export default class AutoTrading extends Component {
             return a;
         }, {});
         return (
-            <div className="auto-trading-container">{markets.map(market => (
-                <AutoTradingMarket market={market}
-                                   orders={(marketOrders[market.market] || [])
-                                       .sort((a, b) => (b.profit || 0) - a.profit)}
-                                   userBalance={this.state.userBalance}/>
-            ))}</div>
+            <div className="auto-trading-container">{markets.map(market => {
+                let orders = (marketOrders[market.market] || [])
+                    .sort((a, b) => (b.profit || 0) - a.profit);
+                return (
+                    <AutoTradingMarket market={market}
+                                       orders={orders}
+                                       userBalance={this.state.userBalance}/>
+                );
+            })}</div>
         )
     }
 }
