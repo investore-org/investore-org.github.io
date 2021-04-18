@@ -85,7 +85,7 @@ export default class AutoTradingMarket extends Component {
                 </div>
             </div>
         );
-        let orders = this.state.orders || [];
+        let orders = this.props.orders || [];
         return (
             <div key={this.props.market.market} className="market">
                 <ChartTradingView symbol={this.props.market.market}/>
