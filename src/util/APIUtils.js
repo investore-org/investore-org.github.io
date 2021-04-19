@@ -52,7 +52,7 @@ export function signup(signupRequest) {
 
 export function getBalance() {
     return request({
-        url: `${API_BASE_URL}/users/current/balance`,
+        url: `${API_BASE_URL}/balances/current`,
         method: 'GET',
     });
 }

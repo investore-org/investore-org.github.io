@@ -12,19 +12,23 @@ export default class AutoTradingMarket extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {...props};
+        this.state = {};
     }
 
     getActiveBalance() {
-        return +this.state.userBalance.activeBalance
+        return +this.props.userBalance.activeBalance
     }
 
     getAutoTradingBalance() {
-        return +this.state.userBalance.autoTradingBalance
+        return +this.props.userBalance.autoTradingBalance
+    }
+
+    getRealAutoTradingBalance() {
+        return +this.props.userBalance.realAutoTradingBalance
     }
 
     getDemoBalance() {
-        return +this.state.userBalance.demoBalance
+        return +this.props.userBalance.demoBalance
     }
 
     getStatusText(status) {
@@ -40,12 +44,13 @@ export default class AutoTradingMarket extends Component {
                 }}
             />
         }
-        if (!this.state.orders) {
+        if (!this.props.orders) {
             return <LoadingIndicator/>
         }
         let totalBalance = this.getDemoBalance() + this.getActiveBalance();
         let autoTradingBalance = this.getAutoTradingBalance();
-        const sign = "$"
+        let realAutoTradingBalance = this.getRealAutoTradingBalance();
+        const sign = this.props.market.quotable;
 
         const onClickInvest = (market) => {
             if (totalBalance < INVEST_USDT_AMOUNT) {
@@ -81,13 +86,19 @@ export default class AutoTradingMarket extends Component {
                                     Your total balance:&nbsp;
                                 </span>
                                 <span className="auto-trading-panel-info-row-balance--value">
-                                    {sign}{totalBalance}
+                                    {totalBalance}&nbsp;{sign}
                                 </span>
                                 <span className="auto-trading-panel-info-row-balance--text">
-                                    &nbsp;Your autotrading balance:&nbsp;
+                                    &nbsp;Your demo autotrading balance:&nbsp;
                                 </span>
                                 <span className="auto-trading-panel-info-row-balance--value">
-                                    {sign}{autoTradingBalance}
+                                    {autoTradingBalance}&nbsp;{sign}
+                                </span>
+                                <span className="auto-trading-panel-info-row-balance--text">
+                                    &nbsp;Your real autotrading balance:&nbsp;
+                                </span>
+                                <span className="auto-trading-panel-info-row-balance--value">
+                                    {realAutoTradingBalance}&nbsp;{sign}
                                 </span>
                             </div>
                         </div>
