@@ -4,6 +4,7 @@ import userService from "../../user/UserService";
 import LoadingIndicator from "../../common/LoadingIndicator";
 import {Redirect} from "react-router-dom";
 import ChartTradingView from "../../chart/ChartTradingView";
+import orderBuilder from "../order/orderBuilder";
 
 const BUY_USDT_AMOUNT = 50;
 let timer = null;
@@ -19,6 +20,7 @@ export default class ManualTrading extends Component {
         this.refreshBalances();
         this.refreshOrders();
         this.refreshOrdersDelayed();
+        this.refreshHiddenOrders();
     }
 
     getMarkets() {
@@ -58,6 +60,17 @@ export default class ManualTrading extends Component {
             });
     }
 
+    refreshHiddenOrders() {
+        let market = this.getMarkets()[this.state.marketIndex || 0];
+        userService.getManualHiddenOrders(market.asset, market.quotable)
+            .catch(console.error)
+            .then(orders => {
+                this.setState({
+                    hiddenOrders: (orders || [])
+                })
+            });
+    }
+
     refreshBalances() {
         userService.getUserBalance()
             .catch(console.error)
@@ -72,10 +85,6 @@ export default class ManualTrading extends Component {
 
     getDemoBalance() {
         return +this.state.userBalance.demoBalance
-    }
-
-    getStatusText(status) {
-        return status.toLowerCase().replaceAll("_", " ")
     }
 
     render() {
@@ -107,57 +116,7 @@ export default class ManualTrading extends Component {
                     }, () => this.refreshBalances()))
             }
         };
-        const onCancel = order => {
-            userService.sendCancel(order.id).catch(console.error)
-        };
-        let buildOrder = order => {
-            let className = "manual-trading-panel--order" + (order?.real
-                ? " manual-trading-panel--order-real" : "");
-            return (
-                <div key={order.id} className={className}>
-                    <div className="manual-trading-panel--order-info-block">
-                        <div className="manual-trading-panel--order-info-row">
-                            market: {order.asset}-{order.quotable}
-                        </div>
-                        <div className="manual-trading-panel--order-info-row">
-                            status: {this.getStatusText(order.status)}
-                        </div>
-                        <div className="manual-trading-panel--order-info-row">
-                            side: {order.side}
-                        </div>
-                        <div className="manual-trading-panel--order-info-row">
-                            invested: {order.amountQuotable} {order.quotable}
-                        </div>
-                        <div className="manual-trading-panel--order-info-row">
-                            bought: {order.boughtAssetQuantity} {order.asset}
-                        </div>
-                        <div className="manual-trading-panel--order-info-row">{
-                            order.sellOrderPrice
-                                ? `sold price: ${order.sellOrderPrice}`
-                                : `bought price: ${order.buyOrderPrice}`
-                        }
-                        </div>
-                        <div className="manual-trading-panel--order-info-row">
-                            last price: {order.lastPrice}
-                        </div>
-                        <div className="manual-trading-panel--order-info-row">
-                            profit: {order.profit}
-                        </div>
-                        <div className="manual-trading-panel--order-info-row">
-                            created: {new Date(order.createdDate).toLocaleString()}
-                        </div>
-                    </div>
-                    <div className="order-controls-panel">
-                        {
-                            order.status === 'INIT_BUY_ORDER_SENT' ? (
-                                <div onClick={() => onCancel(order)}
-                                     className="order-control-button order-control-cancel">x</div>
-                            ) : null
-                        }
-                    </div>
-                </div>
-            );
-        };
+
         const onMarketChangeRequest = newIndex => {
             this.setState({
                 marketIndex: newIndex,
@@ -191,6 +150,21 @@ export default class ManualTrading extends Component {
             )
         }
         let orders = this.state.orders || [];
+        let hiddenOrders = this.state.hiddenOrders || [];
+        const onCancel = order => {
+            userService.sendCancel(order.id).catch(console.error)
+        };
+        const onHide = order => {
+            userService.sendHide(order.id).catch(console.error)
+                .then(__ => {
+                    this.setState({
+                        orders: this.state.orders.filter(_order => _order !== order)
+                    }, () => this.refreshHiddenOrders())
+                })
+        };
+        const onShow = order => {
+            userService.sendShow(order.id).catch(console.error).then(__ => this.refreshHiddenOrders())
+        };
         return (
             <div className="manual-trading-container">
                 <div className="market">
@@ -224,7 +198,10 @@ export default class ManualTrading extends Component {
                             </div>
                             <div className="manual-trading-panel--buttons-container">
                                 <div className="manual-trading-panel--buttons-container-row">
-                                    {orders.map(buildOrder)}
+                                    {orders.map(order => orderBuilder.buildOrder(order, onCancel, onHide, onShow))}
+                                </div>
+                                <div className="manual-trading-panel--buttons-container-row">
+                                    {hiddenOrders.map(order => orderBuilder.buildHiddenOrder(order, onShow))}
                                 </div>
                             </div>
                         </div>

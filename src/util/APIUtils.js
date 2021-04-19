@@ -91,6 +91,14 @@ export function sendCancel(orderId) {
     return sendCommand("cancel", orderId)
 }
 
+export function sendHide(orderId) {
+    return sendCommand("hide", orderId)
+}
+
+export function sendShow(orderId) {
+    return sendCommand("show", orderId)
+}
+
 function sendCommand(command, orderId) {
     return request({
         url: `${API_BASE_URL}/commands/orders/${command}/${orderId}`,
@@ -109,6 +117,21 @@ export function getAutoTradingOrders(asset, quotable) {
 function getOrders(asset, quotable, orderType) {
     return request({
         url: `${API_BASE_URL}/orders?asset=${asset}&quotable=${quotable}&orderType=${orderType}`,
+        method: 'GET',
+    });
+}
+
+export function getManualHiddenOrders(asset, quotable) {
+    return getHiddenOrders(asset, quotable, 'MANUAL');
+}
+
+export function getAutoTradingHiddenOrders(asset, quotable) {
+    return getHiddenOrders(asset, quotable, 'AUTO');
+}
+
+function getHiddenOrders(asset, quotable, orderType) {
+    return request({
+        url: `${API_BASE_URL}/orders/hidden?asset=${asset}&quotable=${quotable}&orderType=${orderType}`,
         method: 'GET',
     });
 }

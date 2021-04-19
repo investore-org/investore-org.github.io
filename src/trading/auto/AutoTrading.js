@@ -18,6 +18,7 @@ export default class AutoTrading extends Component {
         this.refreshBalances();
         this.refreshOrders();
         this.refreshOrdersDelayed();
+        this.refreshHiddenOrders();
     }
 
     componentWillUnmount() {
@@ -47,6 +48,16 @@ export default class AutoTrading extends Component {
             });
     }
 
+    refreshHiddenOrders() {
+        userService.getAutoTradingHiddenOrders(null, null)
+            .catch(console.error)
+            .then(orders => {
+                this.setState({
+                    hiddenOrders: (orders || [])
+                })
+            });
+    }
+
     refreshBalances() {
         userService.getUserBalance()
             .catch(console.error)
@@ -56,7 +67,7 @@ export default class AutoTrading extends Component {
     }
 
     render() {
-        if (!this.state.userBalance || !this.state.orders) {
+        if (!this.state.userBalance || !this.state.orders || !this.state.hiddenOrders) {
             return <LoadingIndicator/>
         }
         const markets = [
@@ -71,13 +82,20 @@ export default class AutoTrading extends Component {
             a[b.market] = (a[b.market] || []).concat(b);
             return a;
         }, {});
+        const marketHiddenOrders = this.state.hiddenOrders.reduce((a, b) => {
+            a[b.market] = (a[b.market] || []).concat(b);
+            return a;
+        }, {});
         return (
             <div className="auto-trading-container">{markets.map(market => {
                 let orders = (marketOrders[market.market] || [])
                     .sort((a, b) => (b.profit || 0) - a.profit);
+                let hiddenOrders = marketHiddenOrders[market.market] || [];
                 return (
                     <AutoTradingMarket market={market}
                                        orders={orders}
+                                       hiddenOrders={hiddenOrders}
+                                       refreshHiddenOrders={() => this.refreshHiddenOrders()}
                                        userBalance={this.state.userBalance}/>
                 );
             })}</div>

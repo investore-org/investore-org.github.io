@@ -4,6 +4,7 @@ import userService from "../../user/UserService";
 import LoadingIndicator from "../../common/LoadingIndicator";
 import ChartTradingView from "../../chart/ChartTradingView";
 import {Redirect} from "react-router-dom";
+import orderBuilder from "../order/orderBuilder";
 
 const INVEST_USDT_AMOUNT = 50;
 
@@ -54,38 +55,17 @@ export default class AutoTradingMarket extends Component {
                     .catch(console.error)
             }
         };
-        let buildOrder = order => (
-            <div key={order.id} className="auto-trading-panel--order">
-                <div className="auto-trading-panel--order-info-row">
-                    market: {order.asset}-{order.quotable}
-                </div>
-                <div className="auto-trading-panel--order-info-row">
-                    status: {this.getStatusText(order.status)}
-                </div>
-                <div className="auto-trading-panel--order-info-row">
-                    side: {order.side}
-                </div>
-                <div className="auto-trading-panel--order-info-row">
-                    invested: {order.amountQuotable} {order.quotable}
-                </div>
-                <div className="auto-trading-panel--order-info-row">
-                    bought: {order.boughtAssetQuantity} {order.asset}
-                </div>
-                <div className="auto-trading-panel--order-info-row">
-                    bought price: {order.buyOrderPrice}
-                </div>
-                <div className="auto-trading-panel--order-info-row">
-                    last price: {order.lastPrice}
-                </div>
-                <div className="auto-trading-panel--order-info-row">
-                    profit: {order.profit}
-                </div>
-                <div className="auto-trading-panel--order-info-row">
-                    created: {new Date(order.createdDate).toLocaleString()}
-                </div>
-            </div>
-        );
         let orders = this.props.orders || [];
+        let hiddenOrders = this.props.hiddenOrders || [];
+        const onCancel = order => {
+            userService.sendCancel(order.id).catch(console.error)
+        };
+        const onHide = order => {
+            userService.sendHide(order.id).catch(console.error)
+        };
+        const onShow = order => {
+            userService.sendShow(order.id).catch(console.error)
+        };
         return (
             <div key={this.props.market.market} className="market">
                 <ChartTradingView symbol={this.props.market.market}/>
@@ -113,7 +93,10 @@ export default class AutoTradingMarket extends Component {
                         </div>
                         <div className="auto-trading-panel--buttons-container">
                             <div className="auto-trading-panel--buttons-container-row">
-                                {orders.map(buildOrder)}
+                                {orders.map(order => orderBuilder.buildOrder(order, onCancel, onHide, onShow))}
+                            </div>
+                            <div className="auto-trading-panel--buttons-container-row">
+                                {hiddenOrders.map(order => orderBuilder.buildHiddenOrder(order, onShow))}
                             </div>
                         </div>
                     </div>

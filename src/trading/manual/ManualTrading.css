@@ -168,7 +168,30 @@
     background-color: #cd8383;
 }
 
-
 .order-control-cancel:hover {
     background-color: #b34343;
 }
+
+.order-control-hide {
+    background-color: rgb(136, 136, 136);
+}
+
+.order-control-hide:hover {
+    background-color: rgb(162, 162, 165);
+}
+
+.manual-trading-panel--hidden-order:hover {
+    background-color: #429085;
+}
+
+.manual-trading-panel--hidden-order {
+    border: 1px solid black;
+    cursor: pointer;
+    padding: 3px;
+    width: 10%;
+}
+
+.manual-trading-panel--real-hidden-order {
+    border: #cd8383 1px solid;
+}
+

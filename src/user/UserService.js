@@ -1,11 +1,15 @@
 import {
+    getAutoTradingHiddenOrders,
     getAutoTradingOrders,
     getBalance,
+    getManualHiddenOrders,
     getManualOrders,
     requestDemoDeposit,
     sendAutoTradingInvest,
     sendBuy,
-    sendCancel
+    sendCancel,
+    sendHide,
+    sendShow
 } from "../util/APIUtils";
 
 class UserService {
@@ -33,8 +37,24 @@ class UserService {
         return await getAutoTradingOrders(asset, quotable)
     }
 
+    async getManualHiddenOrders(asset, quotable) {
+        return await getManualHiddenOrders(asset, quotable)
+    }
+
+    async getAutoTradingHiddenOrders(asset, quotable) {
+        return await getAutoTradingHiddenOrders(asset, quotable)
+    }
+
     async sendCancel(investId) {
         return await sendCancel(investId)
+    }
+
+    async sendHide(investId) {
+        return await sendHide(investId)
+    }
+
+    async sendShow(investId) {
+        return await sendShow(investId)
     }
 }
 
