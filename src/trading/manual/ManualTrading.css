@@ -164,11 +164,13 @@
     text-align: center;
 }
 
-.order-control-cancel {
+.order-control-cancel,
+.order-control-close {
     background-color: #cd8383;
 }
 
-.order-control-cancel:hover {
+.order-control-cancel:hover,
+.order-control-close:hover {
     background-color: #b34343;
 }
 

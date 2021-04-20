@@ -50,9 +50,16 @@ export function signup(signupRequest) {
     });
 }
 
-export function getBalance() {
+export function getBalance(currency) {
     return request({
-        url: `${API_BASE_URL}/balances/current`,
+        url: `${API_BASE_URL}/balances/current?currency=${currency}`,
+        method: 'GET',
+    });
+}
+
+export function getBalances() {
+    return request({
+        url: `${API_BASE_URL}/balances`,
         method: 'GET',
     });
 }
@@ -89,6 +96,10 @@ function sendInvest(asset, quotable, amount, type, isReal) {
 
 export function sendCancel(orderId) {
     return sendCommand("cancel", orderId)
+}
+
+export function sendClose(orderId) {
+    return sendCommand("close", orderId)
 }
 
 export function sendHide(orderId) {

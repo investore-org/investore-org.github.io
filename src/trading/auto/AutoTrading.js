@@ -15,10 +15,27 @@ export default class AutoTrading extends Component {
     }
 
     componentDidMount() {
-        this.refreshBalances();
-        this.refreshOrders();
-        this.refreshOrdersDelayed();
-        this.refreshHiddenOrders();
+        userService.getUserBalances()
+            .catch(console.error)
+            .then(balance => {
+                this.setState({
+                    userBalances: balance,
+                }, () => {
+                    userService.getAutoTradingOrders(null, null)
+                        .catch(console.error)
+                        .then(orders => {
+                            this.setState({orders: orders}, () => {
+                                userService.getAutoTradingHiddenOrders(null, null)
+                                    .catch(console.error)
+                                    .then(orders => {
+                                        this.setState({
+                                            hiddenOrders: (orders || [])
+                                        }, () => this.refreshOrdersDelayed())
+                                    });
+                            })
+                        });
+                })
+            });
     }
 
     componentWillUnmount() {
@@ -66,18 +83,22 @@ export default class AutoTrading extends Component {
             });
     }
 
-    render() {
-        if (!this.state.userBalance || !this.state.orders || !this.state.hiddenOrders) {
-            return <LoadingIndicator/>
-        }
-        const markets = [
+    getMarkets() {
+        return [
             {market: "BTCUSDT", asset: "BTC", quotable: "USDT"},
             {market: "ETHUSDT", asset: "ETH", quotable: "USDT"},
             {market: "BNBUSDT", asset: "BNB", quotable: "USDT"},
             {market: "ETHBTC", asset: "ETH", quotable: "BTC"},
             {market: "BNBBTC", asset: "BNB", quotable: "BTC"},
             {market: "BNBETH", asset: "BNB", quotable: "ETH"},
-        ];
+        ]
+    }
+
+    render() {
+        if (!this.state.userBalances || !this.state.orders || !this.state.hiddenOrders) {
+            return <LoadingIndicator/>
+        }
+        const markets = this.getMarkets();
         const marketOrders = this.state.orders.reduce((a, b) => {
             a[b.market] = (a[b.market] || []).concat(b);
             return a;
@@ -96,7 +117,8 @@ export default class AutoTrading extends Component {
                                        orders={orders}
                                        hiddenOrders={hiddenOrders}
                                        refreshHiddenOrders={() => this.refreshHiddenOrders()}
-                                       userBalance={this.state.userBalance}/>
+                                       userBalanceAsset={this.state.userBalances[market.asset] || {}}
+                                       userBalanceQuotable={this.state.userBalances[market.quotable] || {}}/>
                 );
             })}</div>
         )

@@ -72,7 +72,8 @@ export default class ManualTrading extends Component {
     }
 
     refreshBalances() {
-        userService.getUserBalance()
+        let market = this.getMarkets()[this.state.marketIndex || 0];
+        userService.getUserBalance(market.quotable)
             .catch(console.error)
             .then(balance => {
                 this.setState({userBalance: balance})
@@ -151,8 +152,21 @@ export default class ManualTrading extends Component {
         }
         let orders = this.state.orders || [];
         let hiddenOrders = this.state.hiddenOrders || [];
+        const onClose = order => {
+            userService.sendClose(order.id).catch(console.error)
+                .then(__ => {
+                    this.setState({
+                        orders: this.state.orders.filter(_order => _order !== order)
+                    }, () => this.refreshHiddenOrders())
+                })
+        };
         const onCancel = order => {
             userService.sendCancel(order.id).catch(console.error)
+                .then(__ => {
+                    this.setState({
+                        orders: this.state.orders.filter(_order => _order !== order)
+                    }, () => this.refreshHiddenOrders())
+                })
         };
         const onHide = order => {
             userService.sendHide(order.id).catch(console.error)
@@ -198,7 +212,7 @@ export default class ManualTrading extends Component {
                             </div>
                             <div className="manual-trading-panel--buttons-container">
                                 <div className="manual-trading-panel--buttons-container-row">
-                                    {orders.map(order => orderBuilder.buildOrder(order, onCancel, onHide, onShow))}
+                                    {orders.map(order => orderBuilder.buildOrder(order, onClose, onCancel, onHide))}
                                 </div>
                                 <div className="manual-trading-panel--buttons-container-row">
                                     {hiddenOrders.map(order => orderBuilder.buildHiddenOrder(order, onShow))}

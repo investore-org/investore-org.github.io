@@ -2,19 +2,25 @@ import {
     getAutoTradingHiddenOrders,
     getAutoTradingOrders,
     getBalance,
+    getBalances,
     getManualHiddenOrders,
     getManualOrders,
     requestDemoDeposit,
     sendAutoTradingInvest,
     sendBuy,
     sendCancel,
+    sendClose,
     sendHide,
     sendShow
 } from "../util/APIUtils";
 
 class UserService {
-    async getUserBalance() {
-        return await getBalance()
+    async getUserBalance(currency) {
+        return await getBalance(currency)
+    }
+
+    async getUserBalances() {
+        return await getBalances()
     }
 
     async requestDemoDeposit() {
@@ -47,6 +53,10 @@ class UserService {
 
     async sendCancel(investId) {
         return await sendCancel(investId)
+    }
+
+    async sendClose(investId) {
+        return await sendClose(investId)
     }
 
     async sendHide(investId) {

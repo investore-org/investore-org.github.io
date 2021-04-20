@@ -15,20 +15,28 @@ export default class AutoTradingMarket extends Component {
         this.state = {};
     }
 
+    getAssetBalance() {
+        return this.props.userBalanceAsset
+    }
+
+    getQuotableBalance() {
+        return this.props.userBalanceQuotable
+    }
+
     getActiveBalance() {
-        return +this.props.userBalance.activeBalance
+        return +this.props.userBalanceQuotable.activeBalance
     }
 
     getAutoTradingBalance() {
-        return +this.props.userBalance.autoTradingBalance
+        return +this.props.userBalanceQuotable.autoTradingBalance
     }
 
     getRealAutoTradingBalance() {
-        return +this.props.userBalance.realAutoTradingBalance
+        return +this.props.userBalanceQuotable.realAutoTradingBalance
     }
 
     getDemoBalance() {
-        return +this.props.userBalance.demoBalance
+        return +this.props.userBalanceQuotable.demoBalance
     }
 
     getStatusText(status) {
@@ -62,6 +70,9 @@ export default class AutoTradingMarket extends Component {
         };
         let orders = this.props.orders || [];
         let hiddenOrders = this.props.hiddenOrders || [];
+        const onClose = order => {
+            userService.sendClose(order.id).catch(console.error)
+        };
         const onCancel = order => {
             userService.sendCancel(order.id).catch(console.error)
         };
@@ -104,7 +115,7 @@ export default class AutoTradingMarket extends Component {
                         </div>
                         <div className="auto-trading-panel--buttons-container">
                             <div className="auto-trading-panel--buttons-container-row">
-                                {orders.map(order => orderBuilder.buildOrder(order, onCancel, onHide, onShow))}
+                                {orders.map(order => orderBuilder.buildOrder(order, onClose, onCancel, onHide))}
                             </div>
                             <div className="auto-trading-panel--buttons-container-row">
                                 {hiddenOrders.map(order => orderBuilder.buildHiddenOrder(order, onShow))}

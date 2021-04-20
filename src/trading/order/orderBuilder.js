@@ -16,7 +16,7 @@ class OrderBuilder {
         )
     }
 
-    buildOrder(order, onCancel, onHide) {
+    buildOrder(order, onClose, onCancel, onHide) {
         const buildCancelButton = (order) => {
             return <div onClick={() => onCancel(order)}
                         className="order-control-button order-control-cancel">x</div>;
@@ -25,6 +25,10 @@ class OrderBuilder {
             return <div onClick={() => onHide(order)}
                         className="order-control-button order-control-hide">-</div>;
         }
+        const buildCloseButton = (order) => {
+            return <div onClick={() => onClose(order)}
+                        className="order-control-button order-control-close">x</div>;
+        }
         const buildControlsPanel = (order) => (
             <div className="order-controls-panel">
                 {
@@ -32,6 +36,9 @@ class OrderBuilder {
                 }
                 {
                     order.status === 'COMPLETED' ? buildHideButton(order) : null
+                }
+                {
+                    (order.status === 'CREATED' || order.status === 'CANCELED') ? buildCloseButton(order) : null
                 }
             </div>
         )
