@@ -42,6 +42,11 @@ class OrderBuilder {
                 }
             </div>
         )
+        const buildDateRow = order => {
+            return order.completedDate
+                ? `completed: ${new Date(order.completedDate).toLocaleString()}`
+                : `created: ${new Date(order.createdDate).toLocaleString()}`
+        }
 
         let className = "manual-trading-panel--order" + (order?.real
             ? " manual-trading-panel--order-real" : "");
@@ -76,7 +81,7 @@ class OrderBuilder {
                         profit: {order.profit}
                     </div>
                     <div className="manual-trading-panel--order-info-row">
-                        created: {new Date(order.createdDate).toLocaleString()}
+                        {buildDateRow(order)}
                     </div>
                 </div>
                 {buildControlsPanel(order)}
