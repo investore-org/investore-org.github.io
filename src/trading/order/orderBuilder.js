@@ -54,9 +54,6 @@ class OrderBuilder {
             <div key={order.id} className={className}>
                 <div className="manual-trading-panel--order-info-block">
                     <div className="manual-trading-panel--order-info-row">
-                        market: {order.asset}-{order.quotable}
-                    </div>
-                    <div className="manual-trading-panel--order-info-row">
                         status: {getStatusText(order.status)}
                     </div>
                     <div className="manual-trading-panel--order-info-row">
@@ -76,6 +73,9 @@ class OrderBuilder {
                     </div>
                     <div className="manual-trading-panel--order-info-row">
                         last price: {order.lastPrice}
+                    </div>
+                    <div className="manual-trading-panel--order-info-row">
+                        min profit: {order.minProfitSellPrice}
                     </div>
                     <div className="manual-trading-panel--order-info-row">
                         profit: {order.profit}
