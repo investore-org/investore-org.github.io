@@ -44,7 +44,7 @@ class OrderBuilder {
         )
         const buildDateRow = order => {
             return order.completedDate
-                ? `completed: ${new Date(order.completedDate).toLocaleString()}`
+                ? `finished: ${new Date(order.completedDate).toLocaleString()}`
                 : `created: ${new Date(order.createdDate).toLocaleString()}`
         }
 
