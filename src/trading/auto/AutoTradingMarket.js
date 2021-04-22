@@ -5,6 +5,8 @@ import LoadingIndicator from "../../common/LoadingIndicator";
 import ChartTradingView from "../../chart/ChartTradingView";
 import {Redirect} from "react-router-dom";
 import orderBuilder from "../order/orderBuilder";
+import orderService from "../order/OrderService";
+import {setAfterDecimalPoint} from "../../util/Utils";
 
 const INVEST_USDT_AMOUNT = 50;
 
@@ -82,6 +84,37 @@ export default class AutoTradingMarket extends Component {
         const onShow = order => {
             userService.sendShow(order.id).catch(console.error)
         };
+        const refreshMoreInfo = (market) => {
+            orderService.getAutoTradingOrdersInfo(market.asset, market.quotable).catch(console.error)
+                .then(data => this.setState({
+                    moreInfoData: {
+                        [market.market]: data,
+                    }
+                }))
+        }
+        const moreInfoTrigger = (market) => this.setState({
+            showMoreInfo: !this.state.showMoreInfo,
+        }, () => refreshMoreInfo(market))
+        const buildMoreInfo = (market) => {
+            let moreInfoDatum = this.state.moreInfoData;
+
+            if (!moreInfoDatum) {
+                return null
+            }
+            let marketInfo = moreInfoDatum[market.market] || {};
+            return (
+                <div className="manual-trading-panel-info-row-balance--more-info-block">
+                    {
+                        Object.entries(marketInfo).map((entry, index) => (
+                            <div key={index} className="manual-trading-panel-info-row-balance--more-info-row">
+                                {entry[0].replace(/[A-Z]/g, letter => ` ${letter.toLowerCase()}`)}
+                                : {entry[1]}
+                            </div>
+                        ))
+                    }
+                </div>
+            )
+        }
         return (
             <div key={this.props.market.market} className="market">
                 <ChartTradingView symbol={this.props.market.market}/>
@@ -97,22 +130,28 @@ export default class AutoTradingMarket extends Component {
                                     Your total balance:&nbsp;
                                 </span>
                                 <span className="auto-trading-panel-info-row-balance--value">
-                                    {totalBalance}&nbsp;{sign}
+                                    {setAfterDecimalPoint(totalBalance, 2)}&nbsp;{sign}
                                 </span>
                                 <span className="auto-trading-panel-info-row-balance--text">
                                     &nbsp;Your demo autotrading balance:&nbsp;
                                 </span>
                                 <span className="auto-trading-panel-info-row-balance--value">
-                                    {autoTradingBalance}&nbsp;{sign}
+                                    {setAfterDecimalPoint(autoTradingBalance, 2)}&nbsp;{sign}
                                 </span>
                                 <span className="auto-trading-panel-info-row-balance--text">
                                     &nbsp;Your real autotrading balance:&nbsp;
                                 </span>
                                 <span className="auto-trading-panel-info-row-balance--value">
-                                    {realAutoTradingBalance}&nbsp;{sign}
+                                    {setAfterDecimalPoint(realAutoTradingBalance, 2)}&nbsp;{sign}
                                 </span>
+                                <button
+                                    className="manual-trading-panel-info-row-balance--more-info-button"
+                                    onClick={() => moreInfoTrigger(this.props.market)}>
+                                    {this.state.showMoreInfo ? 'Less Info' : 'More Info'}
+                                </button>
                             </div>
                         </div>
+                        {this.state.showMoreInfo ? buildMoreInfo(this.props.market) : null}
                         <div className="auto-trading-panel--buttons-container">
                             <div className="auto-trading-panel--buttons-container-row">
                                 {orders.map(order => orderBuilder.buildOrder(order, onClose, onCancel, onHide))}

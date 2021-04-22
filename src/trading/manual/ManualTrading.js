@@ -5,6 +5,7 @@ import LoadingIndicator from "../../common/LoadingIndicator";
 import {Redirect} from "react-router-dom";
 import ChartTradingView from "../../chart/ChartTradingView";
 import orderBuilder from "../order/orderBuilder";
+import orderService from "../order/OrderService";
 
 const BUY_USDT_AMOUNT = 50;
 let timer = null;
@@ -179,6 +180,37 @@ export default class ManualTrading extends Component {
         const onShow = order => {
             userService.sendShow(order.id).catch(console.error).then(__ => this.refreshHiddenOrders())
         };
+        const refreshMoreInfo = () => {
+            orderService.getManualOrdersInfo(asset, quotable).catch(console.error)
+                .then(data => this.setState({
+                    moreInfoData: {
+                        [market]: data,
+                    }
+                }))
+        }
+        const moreInfoTrigger = () => this.setState({
+            showMoreInfo: !this.state.showMoreInfo,
+        }, () => refreshMoreInfo())
+        const buildMoreInfo = () => {
+            let moreInfoDatum = this.state.moreInfoData;
+
+            if (!moreInfoDatum) {
+                return null
+            }
+            let marketInfo = moreInfoDatum[market] || {};
+            return (
+                <div className="manual-trading-panel-info-row-balance--more-info-block">
+                    {
+                        Object.entries(marketInfo).map((entry, index) => (
+                            <div key={index} className="manual-trading-panel-info-row-balance--more-info-row">
+                                {entry[0].replace(/[A-Z]/g, letter => ` ${letter.toLowerCase()}`)}
+                                : {entry[1]}
+                            </div>
+                        ))
+                    }
+                </div>
+            )
+        }
         return (
             <div className="manual-trading-container">
                 <div className="market">
@@ -196,19 +228,27 @@ export default class ManualTrading extends Component {
                         <div className="manual-trading-panel">
                             <div className="manual-trading-panel--info-row">
                                 <div className="manual-trading-panel-info-row--balance">
-                                    <span className="manual-trading-panel-info-row-balance--text">
-                                        Your active balance:&nbsp;
-                                    </span>
-                                    <span className="manual-trading-panel-info-row-balance--value">
-                                        {this.getActiveBalance()}&nbsp;{sign}
-                                    </span>
-                                    <span className="manual-trading-panel-info-row-balance--text">
-                                        &nbsp;Your demo balance:&nbsp;
-                                    </span>
-                                    <span className="manual-trading-panel-info-row-balance--value">
-                                        {this.getDemoBalance()}&nbsp;{sign}
-                                    </span>
+                                    <div className="manual-trading-panel-info-row-balance--info">
+                                        <span className="manual-trading-panel-info-row-balance--text">
+                                            Your active balance:&nbsp;
+                                        </span>
+                                        <span className="manual-trading-panel-info-row-balance--value">
+                                            {this.getActiveBalance()}&nbsp;{sign}
+                                        </span>
+                                        <span className="manual-trading-panel-info-row-balance--text">
+                                            &nbsp;Your demo balance:&nbsp;
+                                        </span>
+                                        <span className="manual-trading-panel-info-row-balance--value">
+                                            {this.getDemoBalance()}&nbsp;{sign}
+                                        </span>
+                                    </div>
+                                    <button
+                                        className="manual-trading-panel-info-row-balance--more-info-button"
+                                        onClick={moreInfoTrigger}>
+                                        {this.state.showMoreInfo ? 'Less Info' : 'More Info'}
+                                    </button>
                                 </div>
+                                {this.state.showMoreInfo ? buildMoreInfo() : null}
                             </div>
                             <div className="manual-trading-panel--buttons-container">
                                 <div className="manual-trading-panel--buttons-container-row">

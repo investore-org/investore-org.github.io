@@ -197,3 +197,19 @@
     border: #cd8383 1px solid;
 }
 
+.manual-trading-panel-info-row-balance--more-info-button {
+    position: relative;
+    right: 0;
+    cursor: pointer;
+    opacity: 0.85;
+}
+
+.manual-trading-panel-info-row-balance--more-info-button:hover {
+    opacity: 1;
+}
+
+.manual-trading-panel-info-row--balance {
+    display: flex;
+    flex-flow: row;
+    justify-content: space-between;
+}

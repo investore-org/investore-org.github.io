@@ -147,3 +147,18 @@ function getHiddenOrders(asset, quotable, orderType) {
     });
 }
 
+export function getManualOrdersInfo(asset, quotable) {
+    return getOrdersInfo(asset, quotable, 'MANUAL');
+}
+
+export function getAutoTradingOrdersInfo(asset, quotable) {
+    return getOrdersInfo(asset, quotable, 'AUTO');
+}
+
+function getOrdersInfo(asset, quotable, orderType) {
+    return request({
+        url: `${API_BASE_URL}/info/orders?asset=${asset}&quotable=${quotable}&orderType=${orderType}`,
+        method: 'GET',
+    });
+}
+

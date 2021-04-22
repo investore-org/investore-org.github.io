@@ -207,3 +207,17 @@
 .order-control-cancel:hover {
     background-color: #b34343;
 }
+
+.auto-trading-panel-info-row--balance {
+    display: flex;
+    flex-flow: row;
+    justify-content: space-between;
+    padding: 1%;
+    background-color: #639089;
+}
+
+.manual-trading-panel-info-row-balance--more-info-block {
+    padding: 1%;
+}
+
+
