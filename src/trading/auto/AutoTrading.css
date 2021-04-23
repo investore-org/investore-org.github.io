@@ -22,7 +22,6 @@
     justify-content: center;
     flex-flow: row;
     width: 600%;
-    height: 100vh;
 }
 
 .auto-trading-panel:hover {
