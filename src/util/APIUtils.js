@@ -29,8 +29,8 @@ export function getCurrentUser() {
     }
 
     return request({
-        url: API_BASE_URL + "/user/me",
-        method: 'GET'
+        url: API_BASE_URL + "/users/current",
+        method: 'GET',
     });
 }
 
@@ -38,7 +38,7 @@ export function login(loginRequest) {
     return request({
         url: API_BASE_URL + "/auth/login",
         method: 'POST',
-        body: JSON.stringify(loginRequest)
+        body: JSON.stringify(loginRequest),
     });
 }
 
@@ -46,6 +46,119 @@ export function signup(signupRequest) {
     return request({
         url: API_BASE_URL + "/auth/signup",
         method: 'POST',
-        body: JSON.stringify(signupRequest)
+        body: JSON.stringify(signupRequest),
     });
 }
+
+export function getBalance(currency) {
+    return request({
+        url: `${API_BASE_URL}/balances/current?currency=${currency}`,
+        method: 'GET',
+    });
+}
+
+export function getBalances() {
+    return request({
+        url: `${API_BASE_URL}/balances`,
+        method: 'GET',
+    });
+}
+
+export function requestDemoDeposit() {
+    return request({
+        url: `${API_BASE_URL}/demo/deposit`,
+        method: 'POST',
+    });
+}
+
+export function sendBuy(asset, quotable, amount, isReal) {
+    return sendInvest(asset, quotable, amount, 'MANUAL', isReal);
+}
+
+export function sendAutoTradingInvest(asset, quotable, amount) {
+    return sendInvest(asset, quotable, amount, 'AUTO');
+}
+
+function sendInvest(asset, quotable, amount, type, isReal) {
+    return request({
+        url: `${API_BASE_URL}/orders`,
+        method: 'POST',
+        body: JSON.stringify({
+            asset: asset,
+            quotable: quotable,
+            side: 'BUY',
+            amountQuotable: amount,
+            orderType: type,
+            real: isReal,
+        }),
+    });
+}
+
+export function sendCancel(orderId) {
+    return sendCommand("cancel", orderId)
+}
+
+export function sendClose(orderId) {
+    return sendCommand("close", orderId)
+}
+
+export function sendHide(orderId) {
+    return sendCommand("hide", orderId)
+}
+
+export function sendShow(orderId) {
+    return sendCommand("show", orderId)
+}
+
+function sendCommand(command, orderId) {
+    return request({
+        url: `${API_BASE_URL}/commands/orders/${command}/${orderId}`,
+        method: 'POST',
+    });
+}
+
+export function getManualOrders(asset, quotable) {
+    return getOrders(asset, quotable, 'MANUAL');
+}
+
+export function getAutoTradingOrders(asset, quotable) {
+    return getOrders(asset, quotable, 'AUTO');
+}
+
+function getOrders(asset, quotable, orderType) {
+    return request({
+        url: `${API_BASE_URL}/orders?asset=${asset}&quotable=${quotable}&orderType=${orderType}`,
+        method: 'GET',
+    });
+}
+
+export function getManualHiddenOrders(asset, quotable) {
+    return getHiddenOrders(asset, quotable, 'MANUAL');
+}
+
+export function getAutoTradingHiddenOrders(asset, quotable) {
+    return getHiddenOrders(asset, quotable, 'AUTO');
+}
+
+function getHiddenOrders(asset, quotable, orderType) {
+    return request({
+        url: `${API_BASE_URL}/orders/hidden?asset=${asset}&quotable=${quotable}&orderType=${orderType}`,
+        method: 'GET',
+    });
+}
+
+export function getManualOrdersInfo(asset, quotable) {
+    return getOrdersInfo(asset, quotable, 'MANUAL');
+}
+
+export function getAutoTradingOrdersInfo(asset, quotable) {
+    return getOrdersInfo(asset, quotable, 'AUTO');
+}
+
+function getOrdersInfo(asset, quotable, orderType) {
+    return request({
+        url: `${API_BASE_URL}/info/orders?asset=${asset}&quotable=${quotable}&orderType=${orderType}`,
+        method: 'GET',
+    });
+}
+

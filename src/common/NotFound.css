@@ -3,7 +3,8 @@
     margin: 0 auto;
     margin-top: 50px;
     padding: 40px;
-    border: 1px solid #c8c8c8;
+    box-shadow: 0 0 50px grey;
+    border: 1px solid #052d0e;
     text-align: center;
 }
 

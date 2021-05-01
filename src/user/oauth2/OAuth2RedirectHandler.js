@@ -4,7 +4,7 @@ import {Redirect} from 'react-router-dom'
 
 class OAuth2RedirectHandler extends Component {
     getUrlParameter(name) {
-        name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+        name = name.replace(/[[]/, '\\[').replace(/[\]]/, '\\]');
         var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
 
         var results = regex.exec(this.props.location.search);
@@ -18,7 +18,7 @@ class OAuth2RedirectHandler extends Component {
         if (token) {
             localStorage.setItem(ACCESS_TOKEN, token);
             return <Redirect to={{
-                pathname: "/",
+                pathname: "/logged-in",
                 state: {from: this.props.location}
             }}/>;
         } else {

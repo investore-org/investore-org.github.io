@@ -1,0 +1,46 @@
+.pop-up-container {
+    max-width: 500px;
+    margin: 0 auto;
+    margin-top: 50px;
+    padding: 40px;
+    box-shadow: 0 0 50px #1a1f1b;
+    border: 1px solid #052d0e;
+    text-align: center;
+}
+
+.pop-up-container .title {
+    font-size: 50px;
+    letter-spacing: 5px;
+    margin-bottom: 10px;
+}
+
+.pop-up-container .desc {
+    font-size: 20px;
+    margin: 10%;
+}
+
+.positive-btn,
+.go-back-btn {
+    min-width: 160px;
+}
+
+.positive-btn {
+    background-color: #6eec7a2e;
+}
+
+.go-back-btn {
+    background-color: #8cbeb72e;
+}
+
+.positive-btn:hover {
+    background-color: #6eec7a70;
+}
+
+.go-back-btn:hover {
+    background-color: #8cbeb770;
+}
+
+.deposit-button-container {
+    margin: 10%;
+}
+

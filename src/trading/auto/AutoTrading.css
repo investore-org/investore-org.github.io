@@ -1,0 +1,221 @@
+.market {
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+}
+
+.chart {
+    margin-left: 25%;
+    height: 50vh;
+    width: 50%;
+}
+
+.auto-trading-container .chart-wide {
+    position: relative;
+}
+
+.auto-trading-container {
+    display: flex;
+    justify-content: center;
+    flex-flow: row;
+    width: 600%;
+}
+
+.auto-trading-panel:hover {
+    opacity: 1;
+}
+
+.auto-trading-panel {
+    pointer-events: auto;
+    width: 100%;
+    opacity: 0.7;
+    z-index: 5;
+    background-color: #6f9f98;
+    top: 93%;
+}
+
+.auto-trading-panel--info-row {
+    cursor: default;
+    background-color: #639089;
+}
+
+.auto-trading-panel--buttons-container {
+    padding: 1%;
+    display: flex;
+    flex-flow: column;
+}
+
+.auto-trading-panel--buttons-container-row {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.auto-trading-panel--order:hover {
+    background-color: rgba(146, 248, 228, 0.3);
+}
+
+.auto-trading-panel--order {
+    padding: 1%;
+    cursor: default;
+    z-index: 6;
+    height: 180px;
+    width: 25%;
+    border: 1px solid blanchedalmond;
+}
+
+.auto-trading-panel--button--buy {
+    pointer-events: auto;
+    border: 1px solid blanchedalmond;
+    height: 45px;
+    z-index: 6;
+    width: 15%;
+    padding-top: 0.7em;
+    cursor: pointer;
+    text-align: center;
+    background-color: rgba(146, 248, 171, 0.9);
+    top: 85%;
+}
+
+.auto-trading-panel--button--buy:active,
+.auto-trading-panel--button--buy:hover {
+    opacity: 1;
+    border: 1px solid #75f339;
+    background-color: rgba(146, 248, 171, 0.95);
+}
+
+.auto-trading-panel--container {
+    pointer-events: none;
+    width: 75%;
+    left: 12%;
+    display: flex;
+    flex-flow: column;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.auto-trading-panel--control-buttons-container {
+    width: 100%;
+    display: flex;
+    flex-flow: row;
+    justify-content: space-evenly;
+    align-content: center;
+    position: absolute;
+    top: 86%;
+}
+
+.auto-trading-panel--buttons-container {
+    padding: 1%;
+    display: flex;
+    flex-flow: column;
+}
+
+.auto-trading-panel--buttons-container-row {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.auto-trading-panel--order:hover {
+    background-color: rgba(146, 248, 228, 0.3);
+}
+
+.auto-trading-panel--order {
+    cursor: default;
+    z-index: 6;
+    height: 165px;
+    width: 20%;
+    border: 1px solid blanchedalmond;
+}
+
+.auto-trading-panel--button--buy {
+    pointer-events: auto;
+    border: 1px solid blanchedalmond;
+    height: 45px;
+    z-index: 6;
+    width: 15%;
+    padding: 1% 0 0;
+    cursor: pointer;
+    background-color: rgba(146, 248, 171, 0.9);
+    text-align: center;
+}
+
+.auto-trading-panel--button--buy:active,
+.auto-trading-panel--button--buy:hover {
+    opacity: 1;
+    border: 1px solid #75f339;
+    background-color: rgba(146, 248, 171, 0.95);
+}
+
+.auto-trading-panel--order-info-row {
+    font-size: 14px;
+}
+
+.auto-trading-panel--order-real {
+    border: #cd8383 1px solid;
+}
+
+.prev-market-button:hover,
+.next-market-button:hover {
+    opacity: 1;
+}
+
+.prev-market-button,
+.next-market-button {
+    opacity: 0.9;
+    position: fixed;
+    width: 8%;
+    height: 5%;
+    cursor: pointer;
+    background-color: rgba(146, 248, 171, 0.95);
+}
+
+.prev-market-button {
+    left: 0;
+    bottom: 0;
+}
+
+.next-market-button {
+    right: 0;
+    bottom: 0;
+}
+
+.auto-trading-panel--order-info-block {
+    padding: 3% 0 0 3%;
+    width: 90%;
+}
+
+.order-controls-panel {
+    width: 10%;
+}
+
+.order-control-button {
+    cursor: pointer;
+    width: 100%;
+    overflow-x: hidden;
+    text-align: center;
+}
+
+.order-control-cancel {
+    background-color: #cd8383;
+}
+
+
+.order-control-cancel:hover {
+    background-color: #b34343;
+}
+
+.auto-trading-panel-info-row--balance {
+    display: flex;
+    flex-flow: row;
+    justify-content: space-between;
+    padding: 1%;
+    background-color: #639089;
+}
+
+.manual-trading-panel-info-row-balance--more-info-block {
+    padding: 1%;
+}
+
+

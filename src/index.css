@@ -63,14 +63,14 @@ body {
 **/
 
 a {
-    color: #2098f3;
+    color: #8cbeb7;
     text-decoration: none;
     word-wrap: break-word;
     cursor: pointer;
 }
 
 a:hover {
-    color: #40a9ff;
+    color: #a9ddd6;
     text-decoration: none;
 }
 
@@ -103,7 +103,7 @@ a:hover {
     position: relative;
     color: rgba(0, 0, 0, .65);
     background-color: transparent;
-    border-color: #e8e8e8;
+    border-color: #094139;
     outline: none;
 }
 
@@ -117,14 +117,16 @@ a:hover {
 }
 
 .btn-primary {
+    box-shadow: 0 0 10px mediumspringgreen;
     color: #fff;
-    background-color: #2098f3;
-    border-color: #2098f3;
+    background-color: #35605a;
+    border-color: #2e3532;
 }
 
 .btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active {
-    background-color: #40a9ff;
-    border-color: #40a9ff;
+    box-shadow: 0 0 25px mediumspringgreen;
+    /*background-color: #6f9f98;*/
+    border-color: #6f9f98;
 }
 
 .btn-success {
@@ -192,7 +194,7 @@ a:hover {
 
 
 .form-control:hover, .form-control:focus, .form-control:active {
-    border-color: #40a9ff;
+    border-color: #a9ddd6;
     outline: 0;
     border-right-width: 1px !important;
 }
@@ -227,7 +229,7 @@ a:hover {
 **/
 
 .or-separator {
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid #6f9f98;
     padding: 10px 0;
     position: relative;
     display: block;
@@ -240,7 +242,11 @@ a:hover {
     position: absolute;
     left: 46%;
     top: 0;
-    background: #fff;
+    background: #35605a;
     padding: 10px;
     color: rgba(0, 0, 0, .45);
+}
+
+body {
+    background-color: #3c5757;
 }
