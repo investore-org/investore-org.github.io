@@ -28,7 +28,7 @@ child.innerHTML = "" +
     "    );\n" +
     "  }\n" +
     "}(window.location))";
-document.getElementById('root').appendChild(child);
+document.getElementsByTagName('head')[0].appendChild(child);
 
 ReactDOM.render(
     <Router>
