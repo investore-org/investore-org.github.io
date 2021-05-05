@@ -1,6 +1,7 @@
 {
   "name": "auto-trader-front",
   "version": "0.1.3",
+  "homepage": "https://investore-org.github.io",
   "private": true,
   "dependencies": {
     "react-tradingview-widget": "^1.3.2",
