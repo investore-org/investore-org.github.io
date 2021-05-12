@@ -1,6 +1,6 @@
 {
   "name": "auto-trader-front",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "homepage": "https://investore-org.github.io",
   "private": true,
   "dependencies": {
