@@ -35,7 +35,7 @@ class OrderBuilder {
                     order.status === 'INIT_BUY_ORDER_SENT' ? buildCancelButton(order) : null
                 }
                 {
-                    order.status === 'COMPLETED' ? buildHideButton(order) : null
+                    (order.status === 'COMPLETED' || order.status === 'LIQUIDATED') ? buildHideButton(order) : null
                 }
                 {
                     (order.status === 'CREATED' || order.status === 'CANCELED') ? buildCloseButton(order) : null
