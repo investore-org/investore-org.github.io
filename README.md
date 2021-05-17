@@ -1,2 +1,4 @@
-# investore-org.github.io
-React Web Browser Client Front End
+# INVESTORE
+
+[investore](https://investore-org.github.io) - the autotrading application
+
