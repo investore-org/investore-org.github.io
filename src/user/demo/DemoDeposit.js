@@ -34,7 +34,7 @@ class DemoDeposit extends Component {
                     Demo
                 </h1>
                 <div className="desc">
-                    Proceed to get $100 on your demo balance
+                    Proceed to get $500 on your demo balance
                 </div>
                 <div className={"deposit-button-container"}>
                     <button className="positive-btn btn btn-primary"
