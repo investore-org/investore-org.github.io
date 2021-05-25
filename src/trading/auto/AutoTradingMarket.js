@@ -14,35 +14,46 @@ export default class AutoTradingMarket extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {...props};
     }
 
     getAssetBalance() {
-        return this.props.userBalanceAsset
+        return this.state.userBalanceAsset
     }
 
     getQuotableBalance() {
-        return this.props.userBalanceQuotable
+        return this.state.userBalanceQuotable
     }
 
     getActiveBalance() {
-        return +this.props.userBalanceQuotable.activeBalance
+        return +this.state.userBalanceQuotable.activeBalance
     }
 
     getAutoTradingBalance() {
-        return +this.props.userBalanceQuotable.autoTradingBalance
+        return +this.state.userBalanceQuotable.autoTradingBalance
     }
 
     getRealAutoTradingBalance() {
-        return +this.props.userBalanceQuotable.realAutoTradingBalance
+        return +this.state.userBalanceQuotable.realAutoTradingBalance
     }
 
     getDemoBalance() {
-        return +this.props.userBalanceQuotable.demoBalance
+        return +this.state.userBalanceQuotable.demoBalance
     }
 
     getStatusText(status) {
         return status.toLowerCase().replaceAll("_", " ")
+    }
+
+    refreshBalance() {
+        userService.getUserBalances()
+            .catch(console.error)
+            .then(balance => {
+                this.setState({
+                    userBalanceAsset: balance[this.props.market.asset],
+                    userBalanceQuotable: balance[this.props.market.quotable],
+                })
+            })
     }
 
     render() {
@@ -68,6 +79,7 @@ export default class AutoTradingMarket extends Component {
             } else {
                 userService.sendAutoTradingInvest(market.asset, market.quotable, INVEST_USDT_AMOUNT)
                     .catch(console.error)
+                    .then(() => this.refreshBalance())
             }
         };
         let orders = this.props.orders || [];
