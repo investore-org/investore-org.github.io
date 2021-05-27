@@ -117,6 +117,9 @@
 
 .manual-trading-panel--order-info-row {
     font-size: 14px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 .manual-trading-panel--order-real {
