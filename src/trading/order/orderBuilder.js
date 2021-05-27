@@ -42,47 +42,34 @@ class OrderBuilder {
                 }
             </div>
         )
-        const buildDateRow = order => {
-            return order.completedDate
-                ? `finished: ${new Date(order.completedDate).toLocaleString()}`
-                : `created: ${new Date(order.createdDate).toLocaleString()}`
-        }
-
         let className = "manual-trading-panel--order" + (order?.real
             ? " manual-trading-panel--order-real" : "");
+        let statusText = `status: ${getStatusText(order.status)}`;
+        let sideText = `side: ${order.side}`;
+        let investedText = `invested: ${order.amountQuotable} ${order.quotable}`;
+        let boughtText = `bought: ${order.boughtAssetQuantity} ${order.asset}`;
+        let priceText = order.sellOrderPrice
+            ? `sold price: ${order.sellOrderPrice}`
+            : `bought price: ${order.buyOrderPrice}`;
+        let lastPriceText = `last price: ${order.lastPrice}`;
+        let minProfitText = `min profit: ${order.minProfitSellPrice}`;
+        let profitText = `profit: ${order.profit}`;
+        let dateText = order.completedDate
+            ? `finished: ${new Date(order.completedDate).toLocaleString()}`
+            : `created: ${new Date(order.createdDate).toLocaleString()}`;
+        let infoRowClassName = "manual-trading-panel--order-info-row";
         return (
             <div key={order.id} className={className}>
                 <div className="manual-trading-panel--order-info-block">
-                    <div className="manual-trading-panel--order-info-row">
-                        status: {getStatusText(order.status)}
-                    </div>
-                    <div className="manual-trading-panel--order-info-row">
-                        side: {order.side}
-                    </div>
-                    <div className="manual-trading-panel--order-info-row">
-                        invested: {order.amountQuotable} {order.quotable}
-                    </div>
-                    <div className="manual-trading-panel--order-info-row">
-                        bought: {order.boughtAssetQuantity} {order.asset}
-                    </div>
-                    <div className="manual-trading-panel--order-info-row">{
-                        order.sellOrderPrice
-                            ? `sold price: ${order.sellOrderPrice}`
-                            : `bought price: ${order.buyOrderPrice}`
-                    }
-                    </div>
-                    <div className="manual-trading-panel--order-info-row">
-                        last price: {order.lastPrice}
-                    </div>
-                    <div className="manual-trading-panel--order-info-row">
-                        min profit: {order.minProfitSellPrice}
-                    </div>
-                    <div className="manual-trading-panel--order-info-row">
-                        profit: {order.profit}
-                    </div>
-                    <div className="manual-trading-panel--order-info-row">
-                        {buildDateRow(order)}
-                    </div>
+                    <div className={infoRowClassName} title={statusText}>{statusText}</div>
+                    <div className={infoRowClassName} title={sideText}>{sideText}</div>
+                    <div className={infoRowClassName} title={investedText}>{investedText}</div>
+                    <div className={infoRowClassName} title={boughtText}>{boughtText}</div>
+                    <div className={infoRowClassName} title={priceText}>{priceText}</div>
+                    <div className={infoRowClassName} title={lastPriceText}>{lastPriceText}</div>
+                    <div className={infoRowClassName} title={minProfitText}>{minProfitText}</div>
+                    <div className={infoRowClassName} title={profitText}>{profitText}</div>
+                    <div className={infoRowClassName} title={dateText}>{dateText}</div>
                 </div>
                 {buildControlsPanel(order)}
             </div>
